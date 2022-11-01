@@ -1,9 +1,15 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+
+@Entity
 public class Departement implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idDepart")
     private long idDepart;
     private String nomDepart;
 

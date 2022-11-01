@@ -1,11 +1,17 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
 public class Equipe implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idEquipe")
     private long idEquipe;
     private String nomEquipe;
+    @Enumerated(EnumType.STRING)
     private Niveau niveau;
 
     public Equipe() {
