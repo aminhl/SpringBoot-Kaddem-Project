@@ -12,6 +12,8 @@ public class DetailEquipe implements Serializable {
     private long idDetailEquipe;
     private long salle;
     private String thematique;
+    @OneToOne
+    Equipe equipe;
 
     public DetailEquipe() {
     }

@@ -2,6 +2,7 @@ package com.habngroup.springboot_kaddem.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class Equipe implements Serializable {
@@ -13,6 +14,10 @@ public class Equipe implements Serializable {
     private String nomEquipe;
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "equipes")
+    private Set<Etudiant> etudiants;
+    @OneToOne(mappedBy = "equipe")
+    DetailEquipe detailEquipe;
 
     public Equipe() {
     }

@@ -2,6 +2,7 @@ package com.habngroup.springboot_kaddem.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class Universite implements Serializable {
@@ -10,7 +11,9 @@ public class Universite implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idUniv")
     private long idUniv;
-   private String nomUniv;
+    private String nomUniv;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Departement> departements;
 
     public Universite() {
     }

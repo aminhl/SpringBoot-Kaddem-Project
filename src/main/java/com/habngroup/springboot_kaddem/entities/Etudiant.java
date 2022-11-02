@@ -2,6 +2,7 @@ package com.habngroup.springboot_kaddem.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class Etudiant implements Serializable {
@@ -14,6 +15,12 @@ public class Etudiant implements Serializable {
     private String nomE;
     @Enumerated(EnumType.STRING)
     private Option option;
+    @ManyToOne
+    Departement departement;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "etudiant")
+    private Set<Contrat> contrats;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<Equipe> equipes;
 
     public Etudiant() {
     }
