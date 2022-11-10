@@ -10,7 +10,7 @@ public class Equipe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idEquipe")
-    private long idEquipe;
+    private Long idEquipe;
     private String nomEquipe;
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
@@ -27,17 +27,17 @@ public class Equipe implements Serializable {
         this.niveau = niveau;
     }
 
-    public Equipe(long idEquipe, String nomEquipe, Niveau niveau) {
+    public Equipe(Long idEquipe, String nomEquipe, Niveau niveau) {
         this.idEquipe = idEquipe;
         this.nomEquipe = nomEquipe;
         this.niveau = niveau;
     }
 
-    public long getIdEquipe() {
+    public Long getIdEquipe() {
         return idEquipe;
     }
 
-    public void setIdEquipe(long idEquipe) {
+    public void setIdEquipe(Long idEquipe) {
         this.idEquipe = idEquipe;
     }
 

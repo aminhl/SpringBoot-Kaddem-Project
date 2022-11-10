@@ -9,8 +9,8 @@ public class DetailEquipe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idDetailEquipe")
-    private long idDetailEquipe;
-    private long salle;
+    private Long idDetailEquipe;
+    private Long salle;
     private String thematique;
     @OneToOne
     Equipe equipe;
@@ -18,30 +18,30 @@ public class DetailEquipe implements Serializable {
     public DetailEquipe() {
     }
 
-    public DetailEquipe(long salle, String thematique) {
+    public DetailEquipe(Long salle, String thematique) {
         this.salle = salle;
         this.thematique = thematique;
     }
 
-    public DetailEquipe(long idDetailEquipe, long salle, String thematique) {
+    public DetailEquipe(Long idDetailEquipe, Long salle, String thematique) {
         this.idDetailEquipe = idDetailEquipe;
         this.salle = salle;
         this.thematique = thematique;
     }
 
-    public long getIdDetailEquipe() {
+    public Long getIdDetailEquipe() {
         return idDetailEquipe;
     }
 
-    public void setIdDetailEquipe(long idDetailEquipe) {
+    public void setIdDetailEquipe(Long idDetailEquipe) {
         this.idDetailEquipe = idDetailEquipe;
     }
 
-    public long getSalle() {
+    public Long getSalle() {
         return salle;
     }
 
-    public void setSalle(long salle) {
+    public void setSalle(Long salle) {
         this.salle = salle;
     }
 

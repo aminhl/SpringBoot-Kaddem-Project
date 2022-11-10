@@ -10,7 +10,7 @@ public class Etudiant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idEtudiant")
-    private long idEtudiant;
+    private Long idEtudiant;
     private String prenomE;
     private String nomE;
     @Enumerated(EnumType.STRING)
@@ -31,18 +31,18 @@ public class Etudiant implements Serializable {
         this.option = option;
     }
 
-    public Etudiant(long idEtudiant, String prenomE, String nomE, Option option) {
+    public Etudiant(Long idEtudiant, String prenomE, String nomE, Option option) {
         this.idEtudiant = idEtudiant;
         this.prenomE = prenomE;
         this.nomE = nomE;
         this.option = option;
     }
 
-    public long getIdEtudiant() {
+    public Long getIdEtudiant() {
         return idEtudiant;
     }
 
-    public void setIdEtudiant(long idEtudiant) {
+    public void setIdEtudiant(Long idEtudiant) {
         this.idEtudiant = idEtudiant;
     }
 

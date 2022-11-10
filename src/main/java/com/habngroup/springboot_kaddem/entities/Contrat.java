@@ -10,7 +10,7 @@ public class Contrat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idContrat")
-    private long idContrat;
+    private Long idContrat;
     @Temporal(TemporalType.DATE)
     private Date dateDebutContrat;
     @Temporal(TemporalType.DATE)
@@ -18,14 +18,14 @@ public class Contrat implements Serializable {
     @Enumerated(EnumType.STRING)
     private Specialite specialite;
     private boolean archive;
-    private long montantContrat;
+    private Long montantContrat;
     @ManyToOne
     Etudiant etudiant;
 
     public Contrat() {
     }
 
-    public Contrat(Date dateDebutContrat, Date dateFinContrat, Specialite specialite, boolean archive, long montantContrat) {
+    public Contrat(Date dateDebutContrat, Date dateFinContrat, Specialite specialite, boolean archive, Long montantContrat) {
         this.dateDebutContrat = dateDebutContrat;
         this.dateFinContrat = dateFinContrat;
         this.specialite = specialite;
@@ -33,7 +33,7 @@ public class Contrat implements Serializable {
         this.montantContrat = montantContrat;
     }
 
-    public Contrat(long idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite, boolean archive, long montantContrat) {
+    public Contrat(Long idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite, boolean archive, Long montantContrat) {
         this.idContrat = idContrat;
         this.dateDebutContrat = dateDebutContrat;
         this.dateFinContrat = dateFinContrat;
@@ -42,11 +42,11 @@ public class Contrat implements Serializable {
         this.montantContrat = montantContrat;
     }
 
-    public long getIdContrat() {
+    public Long getIdContrat() {
         return idContrat;
     }
 
-    public void setIdContrat(long idContrat) {
+    public void setIdContrat(Long idContrat) {
         this.idContrat = idContrat;
     }
 
@@ -82,11 +82,11 @@ public class Contrat implements Serializable {
         this.archive = archive;
     }
 
-    public long getMontantContrat() {
+    public Long getMontantContrat() {
         return montantContrat;
     }
 
-    public void setMontantContrat(long montantContrat) {
+    public void setMontantContrat(Long montantContrat) {
         this.montantContrat = montantContrat;
     }
 

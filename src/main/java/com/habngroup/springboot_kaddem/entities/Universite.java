@@ -10,7 +10,7 @@ public class Universite implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idUniv")
-    private long idUniv;
+    private Long idUniv;
     private String nomUniv;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Departement> departements;
@@ -27,11 +27,11 @@ public class Universite implements Serializable {
         this.nomUniv = nomUniv;
     }
 
-    public long getIdUniv() {
+    public Long getIdUniv() {
         return idUniv;
     }
 
-    public void setIdUniv(long idUniv) {
+    public void setIdUniv(Long idUniv) {
         this.idUniv = idUniv;
     }
 

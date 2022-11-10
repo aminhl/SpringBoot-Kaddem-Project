@@ -11,7 +11,7 @@ public class Departement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idDepart")
-    private long idDepart;
+    private Long idDepart;
     private String nomDepart;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departement")
     private Set<Etudiant> etudiants;
@@ -23,16 +23,16 @@ public class Departement implements Serializable {
         this.nomDepart = nomDepart;
     }
 
-    public Departement(long idDepart, String nomDepart) {
+    public Departement(Long idDepart, String nomDepart) {
         this.idDepart = idDepart;
         this.nomDepart = nomDepart;
     }
 
-    public long getIdDepart() {
+    public Long getIdDepart() {
         return idDepart;
     }
 
-    public void setIdDepart(long idDepart) {
+    public void setIdDepart(Long idDepart) {
         this.idDepart = idDepart;
     }
 
