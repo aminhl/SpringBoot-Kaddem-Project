@@ -7,7 +7,7 @@ public interface IUniversiteService {
     void addUniversite(Universite universite);
     void updateUniversite(Universite universite );
     void deleteUniversite(Universite universite);
-    void deleteUniversiteById(Long id);
+    void deleteUniversiteById(Long universiteId);
     List<Universite> getAllUniversites();
-    Universite getUniversiteById(Long id);
+    Universite getUniversiteById(Long universiteId);
 }

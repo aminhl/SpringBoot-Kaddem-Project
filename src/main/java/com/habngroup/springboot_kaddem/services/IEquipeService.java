@@ -7,7 +7,7 @@ public interface IEquipeService {
     void addEquipe(Equipe equipe);
     void updateEquipe(Equipe equipe );
     void deleteEquipe(Equipe equipe);
-    void deleteEquipeById(Long id);
+    void deleteEquipeById(Long equipeId);
     List<Equipe> getAllEquipes();
-    Equipe getEquipeById(Long id);
+    Equipe getEquipeById(Long equipeId);
 }

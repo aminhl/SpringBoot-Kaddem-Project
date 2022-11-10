@@ -7,7 +7,7 @@ public interface IEtudiantService {
     void addEtudiant(Etudiant etudiant);
     void updateEtudiant(Etudiant etudiant);
     void deleteEtudiant(Etudiant etudiant);
-    void deleteEtudiantById(Long id);
+    void deleteEtudiantById(Long etudiantId);
     List<Etudiant> getAllEtudiants();
-    Etudiant getEtudiantById(Long id);
+    Etudiant getEtudiantById(Long etudiantId);
 }

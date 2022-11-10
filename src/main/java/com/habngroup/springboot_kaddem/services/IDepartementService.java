@@ -7,7 +7,7 @@ public interface IDepartementService {
     void addDepartement(Departement departement);
     void updateDepartement(Departement departement );
     void deleteDepartement(Departement departement);
-    void deleteDepartementById(Long DepartementId);
+    void deleteDepartementById(Long departementId);
     List<Departement> getAllDepartements();
     Departement getDepartementById(Long departementId);
 }
