@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IDetailEquipeService {
     void addDetailEquipe(DetailEquipe detailEquipe);
-    void updateDetailEquipe(DetailEquipe detailEquipe );
+    void updateDetailEquipe(Long detailEquipeId,DetailEquipe detailEquipe);
     void deleteDetailEquipe(DetailEquipe detailEquipe);
     void deleteDetailEquipeById(Long contratId);
     List<DetailEquipe> getAllDetailEquipes();

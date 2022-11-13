@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DetailEquipeService implements IDetailEquipeService{
@@ -24,9 +25,17 @@ public class DetailEquipeService implements IDetailEquipeService{
     }
 
     @Override
-    public void updateDetailEquipe(DetailEquipe detailEquipe) {
+    public void updateDetailEquipe(Long detailEquipeId, DetailEquipe detailEquipe) {
         // TODO checking detailEquipe existence before updating
-        detailEquipeRepository.save(detailEquipe);
+        DetailEquipe detailEquipeTopUpdate = getDetailEquipeById(detailEquipeId);
+        if (detailEquipeTopUpdate != null){
+            if (detailEquipe != null && !Objects.equals(detailEquipeTopUpdate, detailEquipe)){
+                detailEquipeTopUpdate.setSalle(detailEquipe.getSalle());
+                detailEquipeTopUpdate.setThematique(detailEquipe.getThematique());
+                detailEquipeRepository.save(detailEquipeTopUpdate);
+            }
+        }
+        else throw new IllegalStateException("DetailEquipe with id " + detailEquipeId + " does not exist");
     }
 
     @Override

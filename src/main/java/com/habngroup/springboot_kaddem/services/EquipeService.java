@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EquipeService implements IEquipeService{
@@ -24,9 +25,17 @@ public class EquipeService implements IEquipeService{
     }
 
     @Override
-    public void updateEquipe(Equipe equipe) {
+    public void updateEquipe(Long equipeId, Equipe equipe) {
         // TODO checking equipe existence before updating
-        equipeRepository.save(equipe);
+        Equipe equipeToUpdate = getEquipeById(equipeId);
+        if (equipeToUpdate != null){
+            if (equipe != null && !Objects.equals(equipeToUpdate, equipe)){
+                equipeToUpdate.setNomEquipe(equipe.getNomEquipe());
+                equipeToUpdate.setNiveau(equipe.getNiveau());
+                equipeRepository.save(equipeToUpdate);
+            }
+        }
+        else throw new IllegalStateException("Equipe with id " + equipeId + " does not exist");
     }
 
     @Override
