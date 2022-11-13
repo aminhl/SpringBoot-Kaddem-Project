@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IDepartementService {
     void addDepartement(Departement departement);
-    void updateDepartement(Departement departement );
+    void updateDepartement(Long departementId, Departement departement);
     void deleteDepartement(Departement departement);
     void deleteDepartementById(Long departementId);
     List<Departement> getAllDepartements();

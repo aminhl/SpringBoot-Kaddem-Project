@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ContratService implements IContratService {
@@ -17,7 +18,6 @@ public class ContratService implements IContratService {
         this.contratRepository = contratRepository;
     }
 
-
     @Override
     public void addContrat(Contrat contrat) {
         // TODO checking contrat !existence before inserting
@@ -25,9 +25,19 @@ public class ContratService implements IContratService {
     }
 
     @Override
-    public void updateContrat(Contrat contrat) {
-        // TODO checking contrat existence before updating
-        contratRepository.save(contrat);
+    public void updateContrat(Long contratId, Contrat contrat) {
+       Contrat contratToUpdate = getContratById(contratId);
+       if (contratToUpdate != null){
+           if (contrat != null && !Objects.equals(contratToUpdate, contrat)){
+               contratToUpdate.setMontantContrat(contrat.getMontantContrat());
+               contratToUpdate.setDateDebutContrat(contrat.getDateDebutContrat());
+               contratToUpdate.setDateFinContrat(contrat.getDateFinContrat());
+               contratToUpdate.setArchive(contrat.isArchive());
+               // TODO specialite to complete ...
+               contratRepository.save(contratToUpdate);
+           }
+       }
+       else throw new IllegalStateException("Contrat with id " + contratId + " does not exist");
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class DepartementService implements IDepartementService{
@@ -15,7 +17,6 @@ public class DepartementService implements IDepartementService{
         this.departementRepository = departementRepository;
     }
 
-
     @Override
     public void addDepartement(Departement departement) {
         // TODO checking departement !existence before inserting
@@ -23,9 +24,15 @@ public class DepartementService implements IDepartementService{
     }
 
     @Override
-    public void updateDepartement(Departement departement) {
-        // TODO checking departement existence before updating
-        departementRepository.save(departement);
+    public void updateDepartement(Long departementId, Departement departement) {
+        Departement departementToUpdate = getDepartementById(departementId);
+        if (departementToUpdate != null){
+            if (departement != null && departement.getNomDepart().length() > 0 && !Objects.equals(departementToUpdate.getNomDepart(), departement.getNomDepart())){
+                departementToUpdate.setNomDepart(departement.getNomDepart());
+                departementRepository.save(departementToUpdate);
+            }
+        }
+        else throw new IllegalStateException("Departement with id " + departementId + " does not exist");
     }
 
     @Override
