@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UniversiteService implements IUniversiteService{
@@ -25,9 +26,17 @@ public class UniversiteService implements IUniversiteService{
     }
 
     @Override
-    public void updateUniversite(Universite universite) {
+    public void updateUniversite(Long universiteId, Universite universite) {
         // TODO checking universite existence before updating
-        universiteRepository.save(universite);
+        Universite universiteToUpdate = getUniversiteById(universiteId);
+        if (universiteToUpdate != null){
+            if (universite != null && !Objects.equals(universiteToUpdate, universite)){
+                universiteToUpdate.setNomUniv(universite.getNomUniv());
+                universiteRepository.save(universite);
+            }
+        }
+        else throw new IllegalStateException("Univeriste with id " + universiteId + " does not exist");
+
     }
 
     @Override

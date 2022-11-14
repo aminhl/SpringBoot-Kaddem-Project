@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IEtudiantService {
     void addEtudiant(Etudiant etudiant);
-    void updateEtudiant(Etudiant etudiant);
+    void updateEtudiant(Long etudiantId, Etudiant etudiant);
     void deleteEtudiant(Etudiant etudiant);
     void deleteEtudiantById(Long etudiantId);
     List<Etudiant> getAllEtudiants();

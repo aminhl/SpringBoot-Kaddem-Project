@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EtudiantService implements IEtudiantService {
@@ -23,9 +24,19 @@ public class EtudiantService implements IEtudiantService {
     }
 
     @Override
-    public void updateEtudiant(Etudiant etudiant) {
+    public void updateEtudiant(Long etudiantId, Etudiant etudiant) {
         // TODO checking etudiant existence before updating
-        etudiantRepository.save(etudiant);
+        Etudiant etudiantToUpdate = getEtudiantById(etudiantId);
+        if (etudiantToUpdate != null){
+            if (etudiant != null && !Objects.equals(etudiantToUpdate, etudiant)){
+                etudiantToUpdate.setNomE(etudiant.getNomE());
+                etudiantToUpdate.setPrenomE(etudiant.getPrenomE());
+                etudiantToUpdate.setOption(etudiant.getOption());
+                etudiantRepository.save(etudiant);
+            }
+        }
+        else throw new IllegalStateException("Etudiant with id " + etudiantId + " does not exist");
+
     }
 
     @Override
