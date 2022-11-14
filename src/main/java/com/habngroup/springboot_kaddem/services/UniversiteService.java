@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.services;
 
+import com.habngroup.springboot_kaddem.entities.Departement;
 import com.habngroup.springboot_kaddem.entities.Universite;
 import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
 import com.habngroup.springboot_kaddem.repositories.UniversiteRepository;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -56,6 +59,21 @@ public class UniversiteService implements IUniversiteService{
     public Universite getUniversiteById(Long universiteId) {
         return universiteRepository.findById(universiteId)
                 .orElseThrow(() -> new IllegalStateException("Universite with id " + universiteId + " does not exist"));
+    }
+    @Override
+    public void assignUniversiteToDepartement(Long idUniversite, Long idDepartement) {
+        Optional<Departement> optionalDepartement = departementRepository.findById(idDepartement);
+        Optional<Universite> optionalUniversite = universiteRepository.findById(idUniversite);
+        if(optionalUniversite.isPresent()&& optionalDepartement.isPresent()){
+            Set<Departement> departements = optionalUniversite.get().getDepartements();
+            departements.add(optionalDepartement.get());
+            universiteRepository.save(optionalUniversite.orElse(null));
+        }
+    }
+    @Override
+    public List<Departement> retrieveDepartementsByUniversite(Long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite).orElseThrow(() -> new IllegalStateException("University with id " + idUniversite +  "does not exist"));
+        return universite.getDepartements().stream().toList();
     }
 
 }

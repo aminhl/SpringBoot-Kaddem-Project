@@ -45,4 +45,9 @@ public class EtudiantController {
     void updateEtudiant(@PathVariable("etudiantId") Long etudiantId, @RequestBody Etudiant etudiant){
         iEtudiantService.updateEtudiant(etudiantId, etudiant);
     }
+
+    @GetMapping("/getEtudiantsByDepartement/{departementId}")
+    List<Etudiant> getEtudiantsByDepartement(@PathVariable("departementId") Long departementId){
+        return iEtudiantService.getEtudiantsByDepartement(departementId);
+    }
 }

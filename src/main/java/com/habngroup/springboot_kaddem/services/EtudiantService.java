@@ -1,5 +1,8 @@
 package com.habngroup.springboot_kaddem.services;
 
+import com.habngroup.springboot_kaddem.entities.Contrat;
+import com.habngroup.springboot_kaddem.entities.Departement;
+import com.habngroup.springboot_kaddem.entities.Equipe;
 import com.habngroup.springboot_kaddem.entities.Etudiant;
 import com.habngroup.springboot_kaddem.repositories.ContratRepository;
 import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class EtudiantService implements IEtudiantService {
@@ -70,5 +74,41 @@ public class EtudiantService implements IEtudiantService {
         return etudiantRepository.findById(etudiantId)
                 .orElseThrow(() -> new IllegalStateException("Etudiant with id " + etudiantId + " does not exist"));
     }
+
+    @Override
+    public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant etudiant, Long idContrat, Long idEquipe) {
+        Optional<Contrat> contratOptional = contratRepository.findById(idContrat);
+        Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
+        if (contratOptional.isPresent() && equipeOptional.isPresent()){
+            etudiant.getContrats().add(contratOptional.get());
+            etudiant.getEquipes().add(equipeOptional.get());
+            return etudiantRepository.save(etudiant);
+        }
+        else throw new IllegalStateException("Contrat with id " + idContrat + " or equipe with id " + idEquipe
+                + " does not exist");
+    }
+
+    @Override
+    public Contrat affectContratToEtudiant(Contrat contrat, String nomEtudiant, String prenomEtudiant) {
+        Etudiant etudiant = etudiantRepository.findEtudiantByNomEAndPrenomE(nomEtudiant, prenomEtudiant)
+                .orElseThrow(() -> new IllegalStateException("Etudiant with nom " + nomEtudiant + " and prenom "
+                        + prenomEtudiant + " does not exist"));
+        if (contrat != null && etudiant.getContrats().size() < 6){
+            etudiant.getContrats().add(contrat);
+            etudiantRepository.save(etudiant);
+            return contrat;
+        }
+        throw new IllegalStateException("Contrat does not exist or Etudiant has already 5 Contrats ");
+    }
+
+    @Override
+    public List<Etudiant> getEtudiantsByDepartement(Long idDepartement) {
+        Departement departement = departementRepository.findById(idDepartement)
+                .orElseThrow(() -> new IllegalStateException("Departement with id " + idDepartement +
+                        " does not exist"));
+        return etudiantRepository.findEtudiantByDepartement(departement);
+    }
+
+
 
 }
