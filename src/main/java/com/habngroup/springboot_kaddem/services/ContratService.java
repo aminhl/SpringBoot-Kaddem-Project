@@ -3,20 +3,14 @@ package com.habngroup.springboot_kaddem.services;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 import com.habngroup.springboot_kaddem.repositories.ContratRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class ContratService implements IContratService {
     private final ContratRepository contratRepository;
-
-    @Autowired
-    ContratService(ContratRepository contratRepository){
-        this.contratRepository = contratRepository;
-    }
 
     @Override
     public void addContrat(Contrat contrat) {
@@ -33,7 +27,7 @@ public class ContratService implements IContratService {
                contratToUpdate.setDateDebutContrat(contrat.getDateDebutContrat());
                contratToUpdate.setDateFinContrat(contrat.getDateFinContrat());
                contratToUpdate.setArchive(contrat.isArchive());
-               // TODO specialite to complete ...
+               contratToUpdate.setSpecialite(contrat.getSpecialite());
                contratRepository.save(contratToUpdate);
            }
        }

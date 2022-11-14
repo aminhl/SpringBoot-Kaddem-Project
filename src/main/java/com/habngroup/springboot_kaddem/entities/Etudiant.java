@@ -1,10 +1,17 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Etudiant implements Serializable {
 
     @Id
@@ -22,61 +29,4 @@ public class Etudiant implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Equipe> equipes;
 
-    public Etudiant() {
-    }
-
-    public Etudiant(String prenomE, String nomE, Option option) {
-        this.prenomE = prenomE;
-        this.nomE = nomE;
-        this.option = option;
-    }
-
-    public Etudiant(Long idEtudiant, String prenomE, String nomE, Option option) {
-        this.idEtudiant = idEtudiant;
-        this.prenomE = prenomE;
-        this.nomE = nomE;
-        this.option = option;
-    }
-
-    public Long getIdEtudiant() {
-        return idEtudiant;
-    }
-
-    public void setIdEtudiant(Long idEtudiant) {
-        this.idEtudiant = idEtudiant;
-    }
-
-    public String getPrenomE() {
-        return prenomE;
-    }
-
-    public void setPrenomE(String prenomE) {
-        this.prenomE = prenomE;
-    }
-
-    public String getNomE() {
-        return nomE;
-    }
-
-    public void setNomE(String nomE) {
-        this.nomE = nomE;
-    }
-
-    public Option getOption() {
-        return option;
-    }
-
-    public void setOption(Option option) {
-        this.option = option;
-    }
-
-    @Override
-    public String toString() {
-        return "Etudiant{" +
-                "idEtudiant=" + idEtudiant +
-                ", prenomE='" + prenomE + '\'' +
-                ", nomE='" + nomE + '\'' +
-                ", option=" + option +
-                '}';
-    }
 }

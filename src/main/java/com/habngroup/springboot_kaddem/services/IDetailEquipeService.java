@@ -1,6 +1,7 @@
 package com.habngroup.springboot_kaddem.services;
 
 import com.habngroup.springboot_kaddem.entities.DetailEquipe;
+
 import java.util.List;
 
 public interface IDetailEquipeService {

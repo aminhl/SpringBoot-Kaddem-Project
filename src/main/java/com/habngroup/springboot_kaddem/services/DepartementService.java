@@ -4,6 +4,7 @@ import com.habngroup.springboot_kaddem.entities.Departement;
 import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,13 +27,12 @@ public class DepartementService implements IDepartementService{
     }
 
     @Override
+    @Transactional
     public void updateDepartement(Long departementId, Departement departement) {
         Departement departementToUpdate = getDepartementById(departementId);
         if (departementToUpdate != null){
-            if (departement != null && departement.getNomDepart().length() > 0 && !Objects.equals(departementToUpdate.getNomDepart(), departement.getNomDepart())){
+            if (departement != null && departement.getNomDepart().length() > 0 && !Objects.equals(departementToUpdate.getNomDepart(), departement.getNomDepart()))
                 departementToUpdate.setNomDepart(departement.getNomDepart());
-                departementRepository.save(departementToUpdate);
-            }
         }
         else throw new IllegalStateException("Departement with id " + departementId + " does not exist");
     }

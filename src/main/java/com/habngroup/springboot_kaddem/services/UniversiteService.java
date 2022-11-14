@@ -1,24 +1,20 @@
 package com.habngroup.springboot_kaddem.services;
 
 import com.habngroup.springboot_kaddem.entities.Universite;
+import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
 import com.habngroup.springboot_kaddem.repositories.UniversiteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class UniversiteService implements IUniversiteService{
 
     private final UniversiteRepository universiteRepository;
-
-    @Autowired
-    public UniversiteService(UniversiteRepository universiteRepository) {
-        this.universiteRepository = universiteRepository;
-    }
-
-
+    private final DepartementRepository departementRepository;
     @Override
     public void addUniversite(Universite universite) {
         // TODO checking universite !existence before inserting
@@ -61,4 +57,5 @@ public class UniversiteService implements IUniversiteService{
         return universiteRepository.findById(universiteId)
                 .orElseThrow(() -> new IllegalStateException("Universite with id " + universiteId + " does not exist"));
     }
+
 }

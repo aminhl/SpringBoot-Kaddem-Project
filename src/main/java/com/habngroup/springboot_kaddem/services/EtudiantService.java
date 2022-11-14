@@ -1,6 +1,9 @@
 package com.habngroup.springboot_kaddem.services;
 
 import com.habngroup.springboot_kaddem.entities.Etudiant;
+import com.habngroup.springboot_kaddem.repositories.ContratRepository;
+import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
+import com.habngroup.springboot_kaddem.repositories.EquipeRepository;
 import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +14,16 @@ import java.util.Objects;
 @Service
 public class EtudiantService implements IEtudiantService {
     private final EtudiantRepository etudiantRepository;
+    private final EquipeRepository equipeRepository;
+    private final ContratRepository contratRepository;
+    private final DepartementRepository departementRepository;
 
     @Autowired
-    public EtudiantService(EtudiantRepository etudiantRepository) {
+    public EtudiantService(EtudiantRepository etudiantRepository, EquipeRepository equipeRepository, ContratRepository contratRepository, DepartementRepository departementRepository) {
         this.etudiantRepository = etudiantRepository;
+        this.equipeRepository = equipeRepository;
+        this.contratRepository = contratRepository;
+        this.departementRepository = departementRepository;
     }
 
     @Override
@@ -61,4 +70,5 @@ public class EtudiantService implements IEtudiantService {
         return etudiantRepository.findById(etudiantId)
                 .orElseThrow(() -> new IllegalStateException("Etudiant with id " + etudiantId + " does not exist"));
     }
+
 }

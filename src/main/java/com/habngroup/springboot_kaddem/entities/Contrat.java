@@ -1,10 +1,16 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Contrat implements Serializable {
 
     @Id
@@ -22,83 +28,7 @@ public class Contrat implements Serializable {
     @ManyToOne
     Etudiant etudiant;
 
-    public Contrat() {
-    }
 
-    public Contrat(Date dateDebutContrat, Date dateFinContrat, Specialite specialite, boolean archive, Long montantContrat) {
-        this.dateDebutContrat = dateDebutContrat;
-        this.dateFinContrat = dateFinContrat;
-        this.specialite = specialite;
-        this.archive = archive;
-        this.montantContrat = montantContrat;
-    }
 
-    public Contrat(Long idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite, boolean archive, Long montantContrat) {
-        this.idContrat = idContrat;
-        this.dateDebutContrat = dateDebutContrat;
-        this.dateFinContrat = dateFinContrat;
-        this.specialite = specialite;
-        this.archive = archive;
-        this.montantContrat = montantContrat;
-    }
 
-    public Long getIdContrat() {
-        return idContrat;
-    }
-
-    public void setIdContrat(Long idContrat) {
-        this.idContrat = idContrat;
-    }
-
-    public Date getDateDebutContrat() {
-        return dateDebutContrat;
-    }
-
-    public void setDateDebutContrat(Date dateDebutContrat) {
-        this.dateDebutContrat = dateDebutContrat;
-    }
-
-    public Date getDateFinContrat() {
-        return dateFinContrat;
-    }
-
-    public void setDateFinContrat(Date dateFinContrat) {
-        this.dateFinContrat = dateFinContrat;
-    }
-
-    public Specialite getSpecialite() {
-        return specialite;
-    }
-
-    public void setSpecialite(Specialite specialite) {
-        this.specialite = specialite;
-    }
-
-    public boolean isArchive() {
-        return archive;
-    }
-
-    public void setArchive(boolean archive) {
-        this.archive = archive;
-    }
-
-    public Long getMontantContrat() {
-        return montantContrat;
-    }
-
-    public void setMontantContrat(Long montantContrat) {
-        this.montantContrat = montantContrat;
-    }
-
-    @Override
-    public String toString() {
-        return "Contrat{" +
-                "idContrat=" + idContrat +
-                ", dateDebutContrat=" + dateDebutContrat +
-                ", dateFinContrat=" + dateFinContrat +
-                ", specialite=" + specialite +
-                ", archive=" + archive +
-                ", montantContrat=" + montantContrat +
-                '}';
-    }
 }

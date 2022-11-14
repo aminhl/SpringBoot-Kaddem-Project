@@ -1,10 +1,17 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 public class Universite implements Serializable {
 
     @Id
@@ -15,39 +22,4 @@ public class Universite implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Departement> departements;
 
-    public Universite() {
-    }
-
-    public Universite(String nomUniv) {
-        this.nomUniv = nomUniv;
-    }
-
-    public Universite(long idUniv, String nomUniv) {
-        this.idUniv = idUniv;
-        this.nomUniv = nomUniv;
-    }
-
-    public Long getIdUniv() {
-        return idUniv;
-    }
-
-    public void setIdUniv(Long idUniv) {
-        this.idUniv = idUniv;
-    }
-
-    public String getNomUniv() {
-        return nomUniv;
-    }
-
-    public void setNomUniv(String nomUniv) {
-        this.nomUniv = nomUniv;
-    }
-
-    @Override
-    public String toString() {
-        return "Universite{" +
-                "idUniv=" + idUniv +
-                ", nomUniv='" + nomUniv + '\'' +
-                '}';
-    }
 }
