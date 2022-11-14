@@ -7,7 +7,7 @@ public interface IDetailEquipeService {
     void addDetailEquipe(DetailEquipe detailEquipe);
     void updateDetailEquipe(Long detailEquipeId,DetailEquipe detailEquipe);
     void deleteDetailEquipe(DetailEquipe detailEquipe);
-    void deleteDetailEquipeById(Long contratId);
+    void deleteDetailEquipeById(Long detailEquipeId);
     List<DetailEquipe> getAllDetailEquipes();
-    DetailEquipe getDetailEquipeById(Long contratId);
+    DetailEquipe getDetailEquipeById(Long detailEquipeId);
 }

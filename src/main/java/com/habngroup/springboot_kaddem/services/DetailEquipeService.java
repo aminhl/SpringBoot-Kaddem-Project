@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.services;
 
+import com.habngroup.springboot_kaddem.entities.Departement;
 import com.habngroup.springboot_kaddem.entities.DetailEquipe;
 import com.habngroup.springboot_kaddem.repositories.DetailEquipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class DetailEquipeService implements IDetailEquipeService{
@@ -20,8 +22,12 @@ public class DetailEquipeService implements IDetailEquipeService{
 
     @Override
     public void addDetailEquipe(DetailEquipe detailEquipe) {
-        // TODO checking detailEquipe !existence before inerting
-        detailEquipeRepository.save(detailEquipe);
+        // TODO checking detailEquipe !existence before inserting
+        Optional<DetailEquipe> detailEquipeToAdd = detailEquipeRepository.
+                findDetailEquipeBySalleAndThematique(detailEquipe.getSalle(), detailEquipe.getThematique());
+        if (detailEquipeToAdd.isEmpty()) detailEquipeRepository.save(detailEquipe);
+        else throw new IllegalStateException("DetailEquipe with salle " + detailEquipe.getSalle() +
+            " and thematique " + detailEquipe.getThematique() + " already exist" );
     }
 
     @Override
@@ -41,13 +47,19 @@ public class DetailEquipeService implements IDetailEquipeService{
     @Override
     public void deleteDetailEquipe(DetailEquipe detailEquipe) {
         // TODO checking detailEquipe existence before deleting
-        detailEquipeRepository.delete(detailEquipe);
+        Optional<DetailEquipe> detailEquipeToDelete = detailEquipeRepository.
+                findDetailEquipeBySalleAndThematique(detailEquipe.getSalle(), detailEquipe.getThematique());
+        if (detailEquipeToDelete.isPresent()) detailEquipeRepository.delete(detailEquipe);
+        else throw new IllegalStateException("DetailEquipe with salle " + detailEquipe.getSalle() +
+                " and thematique " + detailEquipe.getThematique() + " does not exist" );
     }
 
     @Override
-    public void deleteDetailEquipeById(Long contratId) {
+    public void deleteDetailEquipeById(Long detailEquipeId) {
         // TODO checking detailEquipe existence before deleting
-        detailEquipeRepository.deleteById(contratId);
+        DetailEquipe detailEquipeToDelete = getDetailEquipeById(detailEquipeId);
+        if (detailEquipeToDelete != null) detailEquipeRepository.deleteById(detailEquipeId);
+        else throw new IllegalStateException("DetailEquipe with id " + detailEquipeId + " does not exist");
     }
 
     @Override
@@ -56,8 +68,8 @@ public class DetailEquipeService implements IDetailEquipeService{
     }
 
     @Override
-    public DetailEquipe getDetailEquipeById(Long contratId) {
-        return detailEquipeRepository.findById(contratId)
+    public DetailEquipe getDetailEquipeById(Long detailEquipeId) {
+        return detailEquipeRepository.findById(detailEquipeId)
                 .orElseThrow(() -> new IllegalStateException("DetailEquipe does not exist"));
     }
 }

@@ -20,6 +20,8 @@ public class DepartementService implements IDepartementService{
     @Override
     public void addDepartement(Departement departement) {
         // TODO checking departement !existence before inserting
+        Optional<Departement> departementToAdd = departementRepository.findDepartementByNomDepart(departement.getNomDepart());
+        if (departementToAdd.isPresent()) throw new IllegalStateException("Departement " + departement.getNomDepart() + " already exist");
         departementRepository.save(departement);
     }
 
@@ -37,14 +39,17 @@ public class DepartementService implements IDepartementService{
 
     @Override
     public void deleteDepartement(Departement departement) {
-        // TODO checking departement existence before deleting
+        Optional<Departement> departementToAdd = departementRepository.findDepartementByNomDepart(departement.getNomDepart());
+        if (departementToAdd.isEmpty()) throw new IllegalStateException("Departement " + departement.getNomDepart() + " does not exist");
         departementRepository.delete(departement);
     }
 
     @Override
     public void deleteDepartementById(Long departementId) {
-        // TODO checking departement existence before deleting
-        departementRepository.deleteById(departementId);
+        Departement departementToDelete = getDepartementById(departementId);
+        if (departementToDelete != null) departementRepository.deleteById(departementId);
+        else throw new IllegalStateException("Departement with id " + departementId + " does not exist");
+
     }
 
     @Override
