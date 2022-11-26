@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class UniversiteController {
     private final IUniversiteService iUniversiteService;
 
@@ -52,7 +53,7 @@ public class UniversiteController {
         iUniversiteService.assignUniversiteToDepartement(universiteId, departementId);
     }
 
-    @GetMapping("/getDepartementsByUniversity/{universityId}")
+    @GetMapping("/retreiveDepartementsByUniversity/{universityId}")
     List<Departement> getDepartementsByUniversite(@PathVariable("universityId") Long universityId){
         return iUniversiteService.retrieveDepartementsByUniversite(universityId);
     }

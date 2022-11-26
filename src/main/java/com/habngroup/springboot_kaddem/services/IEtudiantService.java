@@ -11,8 +11,8 @@ public interface IEtudiantService {
     void deleteEtudiantById(Long etudiantId);
     List<Etudiant> getAllEtudiants();
     Etudiant getEtudiantById(Long etudiantId);
+     void assignEtudiantToDepartement (Long etudiantId, Long departementId) ;
     Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant etudiant, Long idContrat, Long
             idEquipe);
-    Contrat affectContratToEtudiant(Contrat contrat, String nomEtudiant, String prenomEtudiant);
     List<Etudiant> getEtudiantsByDepartement (Long idDepartement);
 }

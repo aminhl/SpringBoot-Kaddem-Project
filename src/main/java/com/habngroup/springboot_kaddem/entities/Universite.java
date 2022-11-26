@@ -21,5 +21,4 @@ public class Universite implements Serializable {
     private String nomUniv;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Departement> departements;
-
 }

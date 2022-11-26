@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class EtudiantController {
     private final IEtudiantService iEtudiantService;
 
@@ -50,4 +51,20 @@ public class EtudiantController {
     List<Etudiant> getEtudiantsByDepartement(@PathVariable("departementId") Long departementId){
         return iEtudiantService.getEtudiantsByDepartement(departementId);
     }
+
+    @PutMapping("/assignEtudiantToDepartement/{etudiantId}/{departementId}")
+    public void assignEtudiantToDepartement(@PathVariable("etudiantId") Long etudiantId,
+                                            @PathVariable("departementId") Long departementId){
+        iEtudiantService.assignEtudiantToDepartement(etudiantId,departementId);
+    }
+
+    @PostMapping("/addAndAssignEtudiantToEquipeAndContract/{idContrat}/{idEquipe}")
+    Etudiant addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant etudiant,
+                                                     @PathVariable("idContrat") Long idContrat,
+                                                     @PathVariable("idEquipe") Long idEquipe
+    )
+    {
+        return iEtudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant,idContrat,idEquipe);
+    }
+
 }
