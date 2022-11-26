@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class DepartementController {
 
     private final IDepartementService iDepartementService;
