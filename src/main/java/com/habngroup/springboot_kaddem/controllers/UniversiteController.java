@@ -52,7 +52,7 @@ public class UniversiteController {
         iUniversiteService.assignUniversiteToDepartement(universiteId, departementId);
     }
 
-    @GetMapping("/getDepartementsByUniversity/{universityId}")
+    @GetMapping("/retreiveDepartementsByUniversity/{universityId}")
     List<Departement> getDepartementsByUniversite(@PathVariable("universityId") Long universityId){
         return iUniversiteService.retrieveDepartementsByUniversite(universityId);
     }

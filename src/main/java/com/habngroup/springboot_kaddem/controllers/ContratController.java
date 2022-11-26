@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class ContratController {
 
     private final IContratService iContratService;
@@ -47,6 +48,13 @@ public class ContratController {
         iContratService.updateContrat(contratId, contrat);
     }
 
+    @PutMapping("/affectContratToEtudiant/{nomEtudiant}/{prenomEtudiant}")
+    Contrat affectContratToEtudiant(@RequestBody Contrat contrat,
+                                    @PathVariable("nomEtudiant") String nomEtudiant,
+                                    @PathVariable("prenomEtudiant") String prenomEtudiant
+    ){
+        return iContratService.affectContratToEtudiant(contrat, nomEtudiant, prenomEtudiant);
+    }
 
 }
 

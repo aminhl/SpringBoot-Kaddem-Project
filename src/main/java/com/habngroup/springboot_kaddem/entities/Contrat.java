@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,9 +27,7 @@ public class Contrat implements Serializable {
     private boolean archive;
     private Long montantContrat;
     @ManyToOne
-    Etudiant etudiant;
-
-
-
+    @JsonIgnore
+    private Etudiant etudiant;
 
 }

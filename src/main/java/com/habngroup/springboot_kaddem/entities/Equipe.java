@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,8 +23,9 @@ public class Equipe implements Serializable {
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "equipes")
+    @JsonIgnore
     private Set<Etudiant> etudiants;
     @OneToOne(mappedBy = "equipe")
-    DetailEquipe detailEquipe;
+    private DetailEquipe detailEquipe;
 
 }
