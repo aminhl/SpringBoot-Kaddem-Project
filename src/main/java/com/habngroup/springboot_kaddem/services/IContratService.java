@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.services;
 
+import com.habngroup.springboot_kaddem.DTO.ArchivePercentType;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface IContratService  {
     List<Contrat> getAllContrats();
     Contrat getContratById(Long contratId);
     Contrat affectContratToEtudiant(Contrat contrat, String nomEtudiant, String prenomEtudiant);
+    List<ArchivePercentType> getContratPercentByArchiveStatus();
 }

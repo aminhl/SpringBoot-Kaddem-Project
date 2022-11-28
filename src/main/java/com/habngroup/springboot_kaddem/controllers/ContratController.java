@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.controllers;
 
+import com.habngroup.springboot_kaddem.DTO.ArchivePercentType;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 import com.habngroup.springboot_kaddem.services.IContratService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,11 @@ public class ContratController {
                                     @PathVariable("prenomEtudiant") String prenomEtudiant
     ){
         return iContratService.affectContratToEtudiant(contrat, nomEtudiant, prenomEtudiant);
+    }
+
+    @GetMapping("/vData/percentArchiveStatus")
+    public List<ArchivePercentType> getPercentageGroupByArchiveStatus(){
+        return iContratService.getContratPercentByArchiveStatus();
     }
 
 }

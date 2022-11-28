@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.services;
 
+import com.habngroup.springboot_kaddem.DTO.ArchivePercentType;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 import com.habngroup.springboot_kaddem.entities.Etudiant;
 import com.habngroup.springboot_kaddem.repositories.ContratRepository;
@@ -69,5 +70,9 @@ public class ContratService implements IContratService {
             return contratRepository.save(contrat);
         }
         throw new IllegalStateException("Contrat does not exist or Etudiant has already 5 Contrats ");
+    }
+    @Override
+    public List<ArchivePercentType> getContratPercentByArchiveStatus(){
+        return contratRepository.getPercentageGroupByArchiveStatus();
     }
 }
