@@ -104,4 +104,18 @@ public class EtudiantService implements IEtudiantService {
         return etudiantRepository.findEtudiantByDepartement(departement);
     }
 
+    @Override
+    public Departement ShowDepartementEtudiantDetails(Long departementId) {
+        return departementRepository.findById(departementId).
+                orElseThrow(() -> new IllegalStateException("Departement with id " + departementId + " does not exist"));
+    }
+
+    @Override
+    public List<Contrat> getAllContratByIdEtudiant(Long idEtudiant) {
+            Etudiant etudiant = etudiantRepository.findById(idEtudiant).orElseThrow(() -> new IllegalStateException("Etudiant with id " + idEtudiant +
+                    " does not exist"));
+            return contratRepository.findContratByEtudiant(etudiant);
+
+    }
+
 }
