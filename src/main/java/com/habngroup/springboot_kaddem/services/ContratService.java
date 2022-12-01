@@ -3,10 +3,15 @@ package com.habngroup.springboot_kaddem.services;
 import com.habngroup.springboot_kaddem.DTO.ArchivePercentType;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 import com.habngroup.springboot_kaddem.entities.Etudiant;
+import com.habngroup.springboot_kaddem.entities.Specialite;
 import com.habngroup.springboot_kaddem.repositories.ContratRepository;
 import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -75,4 +80,12 @@ public class ContratService implements IContratService {
     public List<ArchivePercentType> getContratPercentByArchiveStatus(){
         return contratRepository.getPercentageGroupByArchiveStatus();
     }
+
+    @Override
+    public List<Contrat> findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(Date dateDebut, Date dateFin, Specialite specialite, boolean archive, Long montantContrat) {
+        return contratRepository.findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(dateDebut, dateFin, specialite, archive, montantContrat);
+    }
+
+
+
 }
