@@ -1,5 +1,7 @@
 package com.habngroup.springboot_kaddem.controllers;
 
+import com.habngroup.springboot_kaddem.entities.Contrat;
+import com.habngroup.springboot_kaddem.entities.Departement;
 import com.habngroup.springboot_kaddem.entities.Etudiant;
 import com.habngroup.springboot_kaddem.services.IEtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,17 @@ public class EtudiantController {
     )
     {
         return iEtudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant,idContrat,idEquipe);
+    }
+
+    @GetMapping("/ShowDepartementEtudiantDetails/{departementId}")
+    Departement ShowDepartementEtudiantDetails (@PathVariable("departementId") Long departementId)
+    {
+        return iEtudiantService.ShowDepartementEtudiantDetails(departementId);
+    }
+    @GetMapping("/getAllContratByIdEtudiant/{idEtudiant}")
+    List<Contrat> getAllContratByIdEtudiant(@PathVariable("idEtudiant") Long idEtudiant)
+    {
+        return iEtudiantService.getAllContratByIdEtudiant(idEtudiant);
     }
 
 }
