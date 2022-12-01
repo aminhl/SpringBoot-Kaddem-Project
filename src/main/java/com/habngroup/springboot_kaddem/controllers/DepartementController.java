@@ -20,13 +20,13 @@ public class DepartementController {
     }
 
     @GetMapping("/getDepartements")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Departement> getAllDepartements(){
         return iDepartementService.getAllDepartements();
     }
 
     @GetMapping("/getDepartement/{departementId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     Departement getDepartementById(@PathVariable("departementId") Long departementId){
        return  iDepartementService.getDepartementById(departementId);
     }

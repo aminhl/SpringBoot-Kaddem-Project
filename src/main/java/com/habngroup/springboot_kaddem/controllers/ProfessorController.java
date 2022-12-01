@@ -48,20 +48,20 @@ public class ProfessorController {
         professorService.assignProfessorToDepartement(professorId, departementId);
     }
     @GetMapping("getProfessorsByDepartmentId")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public List<Professor> getProfessorsByDepartementId(Long idDepartement) {
 
       return professorService.getProfessorsByDepartement(idDepartement);
     }
 
     @GetMapping("getProfessors")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public List<Professor> getAllProfessors() {
         return   professorService.getAllProfessors();
     }
 
     @GetMapping("getProfessorById")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Professor getProfessorById(Long professorId) {
         return professorService.getProfessorById(professorId);
     }

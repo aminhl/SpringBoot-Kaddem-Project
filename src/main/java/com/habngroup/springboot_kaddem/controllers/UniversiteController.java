@@ -19,13 +19,13 @@ public class UniversiteController {
     }
 
     @GetMapping("/getUniversites")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Universite> getAllUniversites(){
         return iUniversiteService.getAllUniversites();
     }
 
     @GetMapping("/getUniversite/{universiteId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     Universite getUniversiteById(@PathVariable("universiteId") Long universiteId){
         return  iUniversiteService.getUniversiteById(universiteId);
     }
@@ -62,7 +62,7 @@ public class UniversiteController {
     }
 
     @GetMapping("/retreiveDepartementsByUniversity/{universityId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Departement> getDepartementsByUniversite(@PathVariable("universityId") Long universityId){
         return iUniversiteService.retrieveDepartementsByUniversite(universityId);
     }

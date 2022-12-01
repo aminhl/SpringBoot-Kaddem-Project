@@ -21,14 +21,13 @@ public class ContratController {
     }
 
     @GetMapping("/getContrats")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Contrat> getAllContrats(){
         return iContratService.getAllContrats();
     }
 
     @GetMapping("/getContrat/{contratId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     Contrat getContratById(@PathVariable("contratId") Long contratId){
         return iContratService.getContratById(contratId);
     }

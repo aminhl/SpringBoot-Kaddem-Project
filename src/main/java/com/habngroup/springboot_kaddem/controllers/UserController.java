@@ -4,7 +4,6 @@ package com.habngroup.springboot_kaddem.controllers;
 import com.habngroup.springboot_kaddem.entities.AppUser;
 import com.habngroup.springboot_kaddem.entities.Role;
 import com.habngroup.springboot_kaddem.services.AppUserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,18 +47,13 @@ public class UserController {
 
     @PostMapping("/role/addtouser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form){
-        appUserService.addRoleToUser(form.getUsername(), form.getRoleName() );
-        return ResponseEntity.ok().build();
+    public void addRoleToUser(@RequestParam("username") String username,@RequestParam("role") String role){
+        appUserService.addRoleToUser(username, role );
+
 
 
     }
 
 
 
-}
-@Data
-class RoleToUserForm{
-    private String username;
-    private String roleName;
 }

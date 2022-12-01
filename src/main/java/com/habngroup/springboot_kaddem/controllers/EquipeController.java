@@ -20,13 +20,13 @@ public class EquipeController {
     }
 
     @GetMapping("/getEquipes")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Equipe> getAllEquipes(){
         return iEquipeService.getAllEquipes();
     }
 
     @GetMapping("/getEquipe/{equipeId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     Equipe getEquipeById(@PathVariable("equipeId") Long equipeId){
         return  iEquipeService.getEquipeById(equipeId);
     }

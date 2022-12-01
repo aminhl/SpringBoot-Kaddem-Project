@@ -19,13 +19,13 @@ public class EtudiantController {
     }
 
     @GetMapping("/getEtudiants")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Etudiant> getAllEtudiants(){
         return iEtudiantService.getAllEtudiants();
     }
 
     @GetMapping("/getEtudiant/{etudiantId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     Etudiant getEtudiantById(@PathVariable("etudiantId") Long etudiantId){
         return  iEtudiantService.getEtudiantById(etudiantId);
     }
@@ -55,7 +55,7 @@ public class EtudiantController {
     }
 
     @GetMapping("/getEtudiantsByDepartement/{departementId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Etudiant> getEtudiantsByDepartement(@PathVariable("departementId") Long departementId){
         return iEtudiantService.getEtudiantsByDepartement(departementId);
     }

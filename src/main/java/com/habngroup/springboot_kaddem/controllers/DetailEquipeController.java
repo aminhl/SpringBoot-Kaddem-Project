@@ -19,13 +19,13 @@ public class DetailEquipeController {
     }
 
     @GetMapping("/getDetailEquipes")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<DetailEquipe> getAllDetailEquipes(){
         return iDetailEquipeService.getAllDetailEquipes();
     }
 
     @GetMapping("/getDetailEquipe/{detailEquipeId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     DetailEquipe getDetailEquipeById(@PathVariable("detailEquipeId") Long DetailEquipeId){
         return  iDetailEquipeService.getDetailEquipeById(DetailEquipeId);
     }
