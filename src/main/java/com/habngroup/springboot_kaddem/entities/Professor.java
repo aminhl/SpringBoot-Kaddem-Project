@@ -21,6 +21,8 @@ public class Professor implements Serializable {
     private String lastName;
     private String email;
     private String phone;
+    @Enumerated(EnumType.STRING)
+    private Specialite specialite;
 
     @ManyToOne (cascade = CascadeType.ALL)
     @JsonIgnore
