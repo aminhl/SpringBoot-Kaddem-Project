@@ -4,5 +4,7 @@ public enum Specialite {
     IA,
     RESEAUX,
     CLOUD,
-    SECURITE
+    SECURITE,
+    MATHEMATICS,
+    PHYSICS
 }
