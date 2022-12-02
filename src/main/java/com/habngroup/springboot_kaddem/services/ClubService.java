@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -15,26 +16,34 @@ public class ClubService implements IClubService{
 
     @Override
     public void addClub(Club club) {
-        // TODO checking club !existence before insert
-        this.clubRepository.save(club);
+        if (clubRepository.findClubByNomClub(club.getNomClub()).isEmpty())
+            this.clubRepository.save(club);
     }
 
     @Override
     public void updateClub(Long clubId, Club club) {
-        // TODO checking club existence before update
-        this.clubRepository.save(club);
+        Club clubToUpdate = getClubById(clubId);
+        if (clubToUpdate != null){
+            if (club != null && !Objects.equals(clubToUpdate,club)){
+                clubToUpdate.setNomClub(club.getNomClub());
+                clubToUpdate.setLogoClub(club.getLogoClub());
+                clubToUpdate.setDomaine(club.getDomaine());
+                this.clubRepository.save(club);
+            }
+        }
+        else throw new IllegalStateException("Club with id " + clubId + " does not exist");
     }
 
     @Override
     public void deleteClub(Club club) {
-        // TODO checking club existence before delete
-        this.clubRepository.delete(club);
+        if (this.clubRepository.findClubByNomClub(club.getNomClub()).isPresent())
+            this.clubRepository.delete(club);
     }
 
     @Override
     public void deleteClubById(Long clubId) {
-        // TODO checking club existence before delete
-        this.clubRepository.deleteById(clubId);
+        if (this.getClubById(clubId) != null)
+            this.clubRepository.deleteById(clubId);
     }
 
     @Override
