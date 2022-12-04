@@ -22,4 +22,5 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
 
     List<Contrat> findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(Date dateDebut, Date dateFin, Specialite specialite,
                                                                                                  boolean archive, Long montantContrat);
+    List <Contrat> findContratByProfessorIdProfessorAndDateDebutContratEqualsAndDateFinContratEquals(Long idProf,Date dateD, Date dateF);
 }
