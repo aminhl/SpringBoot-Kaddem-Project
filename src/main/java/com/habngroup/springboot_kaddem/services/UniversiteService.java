@@ -1,8 +1,12 @@
 package com.habngroup.springboot_kaddem.services;
 
 import com.habngroup.springboot_kaddem.entities.Departement;
+import com.habngroup.springboot_kaddem.entities.Etudiant;
+import com.habngroup.springboot_kaddem.entities.Professor;
 import com.habngroup.springboot_kaddem.entities.Universite;
 import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
+import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
+import com.habngroup.springboot_kaddem.repositories.ProfessorRepo;
 import com.habngroup.springboot_kaddem.repositories.UniversiteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,8 @@ public class UniversiteService implements IUniversiteService{
 
     private final UniversiteRepository universiteRepository;
     private final DepartementRepository departementRepository;
+    private final EtudiantRepository etudiantRepository;
+    private final ProfessorRepo professorRepository;
     @Override
     public void addUniversite(Universite universite) {
         // TODO checking universite !existence before inserting
@@ -76,4 +82,38 @@ public class UniversiteService implements IUniversiteService{
         return universite.getDepartements().stream().toList();
     }
 
+    @Override
+    public void assignUniversiteToEtudiant(Long idUniversite, Long idEtudiant) {
+        Optional<Etudiant> optionalEtudiant = etudiantRepository.findById(idEtudiant);
+        Optional<Universite> optionalUniversite= universiteRepository.findById(idUniversite);
+        if(optionalUniversite.isPresent()&& optionalEtudiant.isPresent()){
+            Set<Etudiant> etudiants= optionalUniversite.get().getEtudiants();
+            etudiants.add(optionalEtudiant.get());
+            universiteRepository.save(optionalUniversite.orElse(null));
+        }
+    }
+
+    @Override
+    public List<Etudiant> retrieveEtudiantByUniversite(Long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite).orElseThrow(() -> new IllegalStateException("University with id " + idUniversite +  "does not exist"));
+        return universite.getEtudiants().stream().toList();
+    }
+
+    @Override
+    public void assignUniversiteToProfessor(Long idUniversite, Long idProfessor) {
+        Optional<Professor> optionalProfessor= professorRepository.findById(idProfessor);
+        Optional<Universite> optionalUniversite= universiteRepository.findById(idUniversite);
+        if(optionalUniversite.isPresent()&& optionalProfessor.isPresent()){
+            Set<Professor> professors=optionalUniversite.get().getProfessors();
+            professors.add(optionalProfessor.get());
+            universiteRepository.save(optionalUniversite.orElse(null));
+        }
+
+    }
+
+    @Override
+    public List<Professor> retrieveProfessorByUniversite(Long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite).orElseThrow(() -> new IllegalStateException("University with id " + idUniversite +  "does not exist"));
+        return universite.getProfessors().stream().toList();
+    }
 }

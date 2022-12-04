@@ -21,4 +21,10 @@ public class Universite implements Serializable {
     private String nomUniv;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Departement> departements;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Etudiant>etudiants;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Professor>professors;
 }
