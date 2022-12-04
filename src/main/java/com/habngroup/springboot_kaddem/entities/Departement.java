@@ -29,4 +29,7 @@ public class Departement implements Serializable {
     @JsonIgnore
     private Set<Etudiant> etudiants;
 
+    @OneToOne(cascade = CascadeType.ALL)
+
+    private Professor chefdepartement;
 }

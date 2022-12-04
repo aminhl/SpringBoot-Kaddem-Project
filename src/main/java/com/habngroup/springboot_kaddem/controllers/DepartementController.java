@@ -1,12 +1,16 @@
 package com.habngroup.springboot_kaddem.controllers;
 
 import com.habngroup.springboot_kaddem.entities.Departement;
+import com.habngroup.springboot_kaddem.entities.Option;
+import com.habngroup.springboot_kaddem.entities.Professor;
 import com.habngroup.springboot_kaddem.services.IDepartementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -48,5 +52,12 @@ public class DepartementController {
     void updateDepartement(@PathVariable("departementId") Long departementId, @RequestBody Departement departement){
         iDepartementService.updateDepartement(departementId, departement);
     }
-
+    @PutMapping("/ajouterchefdepartemnt/{nomDepartement}")
+    void affecterChefDepartement(@PathVariable("nomDepartement")String nomDepartement, @RequestBody Professor professor){
+        iDepartementService.affectChefDepartement(nomDepartement,professor);
+    }
+    @GetMapping("/afficheroptiondepartement/{nomDeaprtement}")
+    Set<Option> displayDepartementoptionsbynom(@PathVariable("nomDeaprtement")String nomDeaprtement){
+     return    iDepartementService.displayDepartementoptionsbynom(nomDeaprtement);
+    }
 }
