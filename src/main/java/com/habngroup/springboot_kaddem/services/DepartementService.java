@@ -1,9 +1,6 @@
 package com.habngroup.springboot_kaddem.services;
 
-import com.habngroup.springboot_kaddem.entities.Departement;
-import com.habngroup.springboot_kaddem.entities.Etudiant;
-import com.habngroup.springboot_kaddem.entities.Option;
-import com.habngroup.springboot_kaddem.entities.Professor;
+import com.habngroup.springboot_kaddem.entities.*;
 import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
 import com.habngroup.springboot_kaddem.repositories.ProfessorRepo;
 import org.springframework.stereotype.Service;
@@ -81,6 +78,7 @@ public class DepartementService implements IDepartementService{
 
         return departement;
     }
+    @Override
     public Set<Option> displayDepartementoptionsbynom(String nomDepartement) {
         Departement departement = departementRepository.findDepartementByNomDepart(nomDepartement).orElse(null);
 
@@ -89,4 +87,14 @@ public class DepartementService implements IDepartementService{
         }
         return null;
     }
+    @Override
+    public Map<Option, Long> displaynbretudiantbyoption(String nomDepartement){
+        Departement departement=departementRepository.findDepartementByNomDepart(nomDepartement).orElse(null);
+        if(departement!=null){
+          return   departement.getEtudiants().stream().collect(Collectors.groupingBy(Etudiant::getOption,Collectors.counting()));
+        }
+
+    return null;
+    }
+
 }

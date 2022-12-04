@@ -60,4 +60,9 @@ public class DepartementController {
     Set<Option> displayDepartementoptionsbynom(@PathVariable("nomDeaprtement")String nomDeaprtement){
      return    iDepartementService.displayDepartementoptionsbynom(nomDeaprtement);
     }
+
+    @GetMapping("/afficherNbrEtudparOption/{nomDepartement}")
+    Map<Option, Long> displaynbretudiantbyoption(@PathVariable("nomDepartement") String nomDepartement){
+        return iDepartementService.displaynbretudiantbyoption(nomDepartement);
+    }
 }
