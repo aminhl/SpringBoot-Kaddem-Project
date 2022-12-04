@@ -26,7 +26,7 @@ public class Etudiant implements Serializable {
     Departement departement;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "etudiant")
     private Set<Contrat> contrats;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private Set<Equipe> equipes;
 
 }
