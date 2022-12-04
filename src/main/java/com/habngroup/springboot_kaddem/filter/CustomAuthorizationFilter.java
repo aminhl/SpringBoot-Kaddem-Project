@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -27,6 +28,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
+
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
 
@@ -34,8 +36,15 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         if(request.getServletPath().equals("/login")){
+
+            response.setHeader("Access-Control-Allow-Credentials", "true");
             filterChain.doFilter(request,response);
-        }else{
+       }else{
+//            response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+//            response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+//            response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+//            response.setHeader("Access-Control-Max-Age", "3600");
+//            response.setHeader("Access-Control-Allow-Credentials", "true");
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
                 try {
@@ -65,6 +74,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 }
 
             }else {
+
                 filterChain.doFilter(request,response);
             }
         }

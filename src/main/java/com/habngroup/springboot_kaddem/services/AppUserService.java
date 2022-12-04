@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
+@CrossOrigin
 public class AppUserService implements IAppUserService, UserDetailsService {
     private final AppUserRepo appUserRepo;
     private final RoleRepo roleRepo;

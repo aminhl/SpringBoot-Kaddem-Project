@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("")
+
 public class UserController {
     private final AppUserService appUserService;
 
@@ -32,10 +33,10 @@ public class UserController {
     }
 
     @PostMapping("/user/save")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<AppUser> addUser(@RequestBody AppUser appuser){
-        URI  uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(appUserService.saveUser(appuser));
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public AppUser addUser(@RequestBody AppUser appuser){
+
+      return appUserService.saveUser(appuser);
     }
 
     @PostMapping("/role/save")
