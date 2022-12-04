@@ -30,4 +30,8 @@ public class Contrat implements Serializable {
     @JsonIgnore
     private Etudiant etudiant;
 
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Professor professor;
+
 }
