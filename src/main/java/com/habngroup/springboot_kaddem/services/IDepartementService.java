@@ -18,4 +18,5 @@ public interface IDepartementService {
 
     Departement affectChefDepartement(String nomDepartement, Professor professor);
     Set<Option> displayDepartementoptionsbynom(String nomDepartement);
+    public Map<Option, Long> displaynbretudiantbyoption(String nomDepartement);
 }
