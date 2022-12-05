@@ -1,9 +1,8 @@
 package com.habngroup.springboot_kaddem.services;
 
-import com.habngroup.springboot_kaddem.entities.Departement;
-import com.habngroup.springboot_kaddem.entities.Etudiant;
-import com.habngroup.springboot_kaddem.entities.Professor;
-import com.habngroup.springboot_kaddem.entities.Universite;
+import com.habngroup.springboot_kaddem.entities.*;
+import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
+
 import java.util.List;
 
 public interface IUniversiteService {
@@ -16,7 +15,4 @@ public interface IUniversiteService {
     void assignUniversiteToDepartement(Long idUniversite, Long idDepartement);
     List<Departement> retrieveDepartementsByUniversite(Long idUniversite);
     void assignUniversiteToEtudiant(Long idUniversite, Long idEtudiant);
-    List<Etudiant> retrieveEtudiantByUniversite(Long idUniversite);
-    void assignUniversiteToProfessor(Long idUniversite,Long idProfessor);
-    List<Professor> retrieveProfessorByUniversite(Long idUniversite);
 }
