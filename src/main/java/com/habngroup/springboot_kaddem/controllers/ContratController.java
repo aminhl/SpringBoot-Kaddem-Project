@@ -76,6 +76,7 @@ public class ContratController {
     }
 
     @GetMapping("/searchContratByAnyCriteria/")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Contrat> findByAnyParam(
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateDebut,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFin,
@@ -87,23 +88,27 @@ public class ContratController {
     }
 
     @GetMapping("/getContratsBetween/{dateDebut}/{dateFin}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Contrat> getContratsBetween(@PathVariable("dateDebut") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateDebut,
                                      @PathVariable("dateFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFin){
         return iContratService.getContratsBetween(dateDebut, dateFin);
     }
 
     @GetMapping("/getNbContratsValides/{dateDebut}/{dateFin}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     Long getNbContratsValides(@PathVariable("dateDebut") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateDebut,
                               @PathVariable("dateFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFin){
         return iContratService.nbContratsValides(dateDebut, dateFin);
     }
 
     @GetMapping("getRandomIdContrat")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     Long getRandomIdContrat(){
         return iContratService.getRandomIdContrat();
     }
 
     @PutMapping("/contratReduction")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     void reductionOnRandomContrat(){
        iContratService.reductionOnRandomContrat();
     }
