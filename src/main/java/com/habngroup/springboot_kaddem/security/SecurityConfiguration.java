@@ -32,8 +32,6 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
 
-    // private final org.springframework.security.authentication.AuthenticationManager authenticationManager;
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
@@ -42,8 +40,6 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable();
-       // httpSecurity.headers().frameOptions().disable();
-       // httpSecurity.cors().disable();
         httpSecurity.authorizeHttpRequests().antMatchers("/login/**").permitAll();
         httpSecurity.authorizeHttpRequests().antMatchers("/user/save/**").permitAll();
         httpSecurity.authorizeHttpRequests().antMatchers("/swagger-ui/**").permitAll();
@@ -66,7 +62,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*")); // <-- you may change "*"
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setAllowCredentials(false);
         configuration.setAllowedHeaders(Arrays.asList(

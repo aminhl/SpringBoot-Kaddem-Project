@@ -40,11 +40,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             response.setHeader("Access-Control-Allow-Credentials", "true");
             filterChain.doFilter(request,response);
        }else{
-//            response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-//            response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
-//            response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-//            response.setHeader("Access-Control-Max-Age", "3600");
-//            response.setHeader("Access-Control-Allow-Credentials", "true");
+
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
                 try {
@@ -66,7 +62,6 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     log.error("ERROR LOGGING IN:{}",exception.getMessage());
                     response.setHeader("error",exception.getMessage());
                     response.setStatus(403);
-                    //   response.sendError(403);
                     Map<String,String> error = new HashMap<>();
                     error.put("error_message",exception.getMessage());
                     response.setContentType(APPLICATION_JSON_VALUE);

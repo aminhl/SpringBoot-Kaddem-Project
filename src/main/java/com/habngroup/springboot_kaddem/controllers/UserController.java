@@ -4,6 +4,7 @@ package com.habngroup.springboot_kaddem.controllers;
 import com.habngroup.springboot_kaddem.entities.AppUser;
 import com.habngroup.springboot_kaddem.entities.Role;
 import com.habngroup.springboot_kaddem.services.AppUserService;
+import com.habngroup.springboot_kaddem.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,9 +17,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("")
-
 public class UserController {
     private final AppUserService appUserService;
+    private final RoleService roleService;
 
     @GetMapping("/users")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -35,8 +36,9 @@ public class UserController {
     @PostMapping("/user/save")
    // @PreAuthorize("hasRole('ROLE_ADMIN')")
     public AppUser addUser(@RequestBody AppUser appuser){
-
-      return appUserService.saveUser(appuser);
+        Role role_user = roleService.setUserRole();
+        appuser.getRoles().add(role_user);
+        return appUserService.saveUser(appuser);
     }
 
     @PostMapping("/role/save")

@@ -2,6 +2,8 @@ package com.habngroup.springboot_kaddem.services;
 
 import com.habngroup.springboot_kaddem.DTO.ArchivePercentType;
 import com.habngroup.springboot_kaddem.entities.Contrat;
+
+import java.text.ParseException;
 import java.util.List;
 
 public interface IContratService  {
@@ -13,4 +15,5 @@ public interface IContratService  {
     Contrat getContratById(Long contratId);
     Contrat affectContratToEtudiant(Contrat contrat, String nomEtudiant, String prenomEtudiant);
     List<ArchivePercentType> getContratPercentByArchiveStatus();
+    String retrieveAndUpdateStatusContrat() throws ParseException;
 }

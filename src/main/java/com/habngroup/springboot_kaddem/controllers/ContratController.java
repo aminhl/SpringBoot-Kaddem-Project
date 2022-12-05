@@ -66,7 +66,7 @@ public class ContratController {
     }
 
     @GetMapping("/vData/percentArchiveStatus")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public List<ArchivePercentType> getPercentageGroupByArchiveStatus(){
         return iContratService.getContratPercentByArchiveStatus();
     }
