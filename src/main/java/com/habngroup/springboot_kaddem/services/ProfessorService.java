@@ -3,6 +3,7 @@ package com.habngroup.springboot_kaddem.services;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 import com.habngroup.springboot_kaddem.entities.Departement;
 import com.habngroup.springboot_kaddem.entities.Professor;
+import com.habngroup.springboot_kaddem.entities.Specialite;
 import com.habngroup.springboot_kaddem.repositories.ContratRepository;
 import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
 import com.habngroup.springboot_kaddem.repositories.ProfessorRepo;
@@ -10,7 +11,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 @Service
 @AllArgsConstructor
 public class ProfessorService implements IProfessor{
@@ -35,7 +40,7 @@ public class ProfessorService implements IProfessor{
 
     @Override
     public void deleteProfessorById(Long professorId) {
-
+        professorRepo.deleteById(professorId);
     }
     @Override
     public List<Professor> getAllProfessors() {
@@ -59,8 +64,8 @@ public class ProfessorService implements IProfessor{
     public void assignProfessorToContrat(Long professorId, Long contratId) {
         Professor professor = professorRepo.findById(professorId).orElse(null);
         Contrat contrat = contratRepository.findById(contratId).orElse(null);
-        professor.setContrat(contrat);
-        professorRepo.save(professor);
+        contrat.setProfessor(professor);
+        contratRepository.save(contrat);
     }
 
 
@@ -69,8 +74,30 @@ public class ProfessorService implements IProfessor{
     public List<Professor> getProfessorsByDepartement(Long idDepartement) {
         return professorRepo.findProfessorsByDepartmentIdDepart(idDepartement);
     }
+
+    @Override
+    public List<Professor> findByFirstNameOrLastNameOrPhoneOrEmailOrSpecialityAndFirstNameIsNotNullAndLastNameIsNotNullAndPhoneIsNotNullAndEmailIsNotNullAndSpecialityIsNotNull(String firstName, String lastName, String phone, String email, Specialite speciality) {
+        return professorRepo.findByFirstNameOrLastNameOrPhoneOrEmailOrSpecialityAndFirstNameIsNotNullAndLastNameIsNotNullAndPhoneIsNotNullAndEmailIsNotNullAndSpecialityIsNotNull(firstName,lastName,phone,email, speciality);
+
+    }
+
+    @Override
+    public Float getProfessorSumAmount(Long idP, Date dateD, Date dateF) {
+
+       List <Contrat> contrats = contratRepository.findContratByProfessorIdProfessorAndDateDebutContratEqualsAndDateFinContratEquals(idP, dateD, dateF);
+        long time= Math.abs(dateF.getTime() - dateD.getTime());
+        long days= TimeUnit.DAYS.convert(time, TimeUnit.MILLISECONDS);
+        long months  = days/30;
+        float sum = 0;
+        for (Contrat contrat :  contrats) {
+            sum += (months * contrat.getMontantContrat());
+        }
+        return  sum ;
+    }
+
     @Override
     public Professor addAndAssignProfessorToEquipeAndContract(Professor Professor, Long idContrat, Long idEquipe) {
         return null;
     }
+
 }

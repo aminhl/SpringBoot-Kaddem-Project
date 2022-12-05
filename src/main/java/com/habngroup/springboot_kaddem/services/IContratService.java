@@ -3,7 +3,12 @@ package com.habngroup.springboot_kaddem.services;
 import com.habngroup.springboot_kaddem.DTO.ArchivePercentType;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 
+
 import java.text.ParseException;
+import com.habngroup.springboot_kaddem.entities.Specialite;
+
+import java.util.Date;
+
 import java.util.List;
 
 public interface IContratService  {
@@ -16,4 +21,7 @@ public interface IContratService  {
     Contrat affectContratToEtudiant(Contrat contrat, String nomEtudiant, String prenomEtudiant);
     List<ArchivePercentType> getContratPercentByArchiveStatus();
     String retrieveAndUpdateStatusContrat() throws ParseException;
+
+    List<Contrat> findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(Date dateDebut, Date dateFin, Specialite specialite,
+                                                                                                 boolean archive, Long montantContrat);
 }

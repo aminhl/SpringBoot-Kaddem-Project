@@ -2,11 +2,15 @@ package com.habngroup.springboot_kaddem.controllers;
 
 import com.habngroup.springboot_kaddem.DTO.ArchivePercentType;
 import com.habngroup.springboot_kaddem.entities.Contrat;
+import com.habngroup.springboot_kaddem.entities.Specialite;
 import com.habngroup.springboot_kaddem.services.IContratService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -70,6 +74,18 @@ public class ContratController {
     public List<ArchivePercentType> getPercentageGroupByArchiveStatus(){
         return iContratService.getContratPercentByArchiveStatus();
     }
+
+    @GetMapping("/searchContratByAnyCriteria/")
+    List<Contrat> findByAnyParam(
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateDebut,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFin,
+            @RequestParam(required = false) Specialite specialite,
+            @RequestParam(required = false) boolean archive,
+            @RequestParam(required = false) Long montant
+            ){
+        return iContratService.findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(dateDebut, dateFin, specialite, archive, montant);
+    }
+
 
 }
 

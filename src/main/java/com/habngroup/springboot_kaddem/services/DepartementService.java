@@ -1,21 +1,23 @@
 package com.habngroup.springboot_kaddem.services;
 
-import com.habngroup.springboot_kaddem.entities.Departement;
+import com.habngroup.springboot_kaddem.entities.*;
 import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
+import com.habngroup.springboot_kaddem.repositories.ProfessorRepo;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartementService implements IDepartementService{
 
     private final DepartementRepository departementRepository;
+    private final ProfessorRepo professorRepo;
 
-    public DepartementService(DepartementRepository departementRepository) {
+    public DepartementService(DepartementRepository departementRepository,ProfessorRepo professorRepo) {
         this.departementRepository = departementRepository;
+        this.professorRepo=professorRepo;
     }
 
     @Override
@@ -62,4 +64,37 @@ public class DepartementService implements IDepartementService{
         return departementRepository.findById(departementId)
                 .orElseThrow(() -> new IllegalStateException("Departement does not exist"));
     }
+
+    @Override
+    public Departement affectChefDepartement(String nomDepartement, Professor professor) {
+        Departement departement=departementRepository.findDepartementByNomDepart(nomDepartement).orElse(null);
+
+        Professor p= professorRepo.findById(professor.getIdProfessor()).orElse(null);
+
+        if(departement!=null && p!=null){
+            departement.setChefdepartement(p);
+          return   departementRepository.save(departement);
+        }
+
+        return departement;
+    }
+    @Override
+    public Set<Option> displayDepartementoptionsbynom(String nomDepartement) {
+        Departement departement = departementRepository.findDepartementByNomDepart(nomDepartement).orElse(null);
+
+        if (departement != null) {
+            return departement.getEtudiants().stream().map(Etudiant::getOption).collect(Collectors.toSet());
+        }
+        return null;
+    }
+    @Override
+    public Map<Option, Long> displaynbretudiantbyoption(String nomDepartement){
+        Departement departement=departementRepository.findDepartementByNomDepart(nomDepartement).orElse(null);
+        if(departement!=null){
+          return   departement.getEtudiants().stream().collect(Collectors.groupingBy(Etudiant::getOption,Collectors.counting()));
+        }
+
+    return null;
+    }
+
 }
