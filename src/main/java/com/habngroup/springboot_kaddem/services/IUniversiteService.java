@@ -5,6 +5,7 @@ import com.habngroup.springboot_kaddem.entities.Etudiant;
 import com.habngroup.springboot_kaddem.entities.Professor;
 import com.habngroup.springboot_kaddem.entities.Universite;
 import java.util.List;
+import java.util.TreeSet;
 
 public interface IUniversiteService {
     void addUniversite(Universite universite);
@@ -17,6 +18,5 @@ public interface IUniversiteService {
     List<Departement> retrieveDepartementsByUniversite(Long idUniversite);
     void assignUniversiteToEtudiant(Long idUniversite, Long idEtudiant);
     List<Etudiant> retrieveEtudiantByUniversite(Long idUniversite);
-    void assignUniversiteToProfessor(Long idUniversite,Long idProfessor);
-    List<Professor> retrieveProfessorByUniversite(Long idUniversite);
+    TreeSet<Universite> getUniversitiesSorted();
 }
