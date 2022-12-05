@@ -17,10 +17,13 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
             "(count(*)/(Select COUNT(*) from Contrat) * 100, archive) from Contrat GROUP BY archive")
     public List <ArchivePercentType> getPercentageGroupByArchiveStatus();
 
+    List<Contrat> findContratsByDateFinContrat(Date date);
+}
+
     @Query("select c from Contrat c where c.etudiant = ?1")
     List<Contrat> findContratByEtudiant(Etudiant etudiant);
-
     List<Contrat> findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(Date dateDebut, Date dateFin, Specialite specialite,
                                                                                                  boolean archive, Long montantContrat);
     List <Contrat> findContratByProfessorIdProfessorAndDateDebutContratEqualsAndDateFinContratEquals(Long idProf,Date dateD, Date dateF);
 }
+
