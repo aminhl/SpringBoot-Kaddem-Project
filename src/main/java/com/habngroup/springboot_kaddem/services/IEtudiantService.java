@@ -3,7 +3,9 @@ package com.habngroup.springboot_kaddem.services;
 import com.habngroup.springboot_kaddem.entities.*;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeSet;
 
 public interface IEtudiantService {
@@ -25,10 +27,16 @@ public interface IEtudiantService {
     void AssignEtudiantToClub(Long etudiantId, Long clubId);
     String retrieveAndUpdateStatusContratbyEtudiant() throws ParseException;
     List<Etudiant> findetudiantByNameOrLastName(String nomE,String prenomE);
+    List<Etudiant> findetudiantByName(String nomE);
     List<Etudiant> ShowStudentbyOption(Option option);
 
     List<Etudiant> ShowStudentbyNomClub(String nomClub);
 
     TreeSet<Etudiant> TriEtudiantbyName();
+
+    Optional<Departement> findDepartementByname(String nomDep);
+    List<Equipe> findEquipeByNomEquipe(String nomEqu);
+
+    List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContrat(Specialite specialite, Date datededebut , Date datedefin,Long montant);
 
 }
