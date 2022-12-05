@@ -30,5 +30,6 @@ public class Etudiant implements Serializable {
     private Set<Equipe> equipes;
     @ManyToOne
     Universite universite;
+    private Club club;
 
 }
