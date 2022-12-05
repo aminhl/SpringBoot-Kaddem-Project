@@ -1,6 +1,7 @@
 package com.habngroup.springboot_kaddem.controllers;
 
 import com.habngroup.springboot_kaddem.entities.Departement;
+import com.habngroup.springboot_kaddem.entities.Etudiant;
 import com.habngroup.springboot_kaddem.entities.Option;
 import com.habngroup.springboot_kaddem.entities.Professor;
 import com.habngroup.springboot_kaddem.services.IDepartementService;
@@ -70,5 +71,14 @@ public class DepartementController {
     @GetMapping("/afficherNbrEtudparOption/{nomDepartement}")
     Map<Option, Long> displaynbretudiantbyoption(@PathVariable("nomDepartement") String nomDepartement){
         return iDepartementService.displaynbretudiantbyoption(nomDepartement);
+    }
+    @GetMapping("/groupetudiant/{option}")
+    public Map<String, List<Etudiant>> getEtudiantbyoption(@PathVariable("option") String option) {
+        return iDepartementService.alletudiantbyoptiondepartement(option);
+    }
+    @GetMapping("/countnbrprofbydep/{nomDepartement}")
+    Long countnbrprofbydep(@PathVariable("nomDepartement")String nomdepart){
+        return iDepartementService.countprofesseurbydepartement(nomdepart);
+
     }
 }
