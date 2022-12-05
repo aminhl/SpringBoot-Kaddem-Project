@@ -10,4 +10,6 @@ public interface IEquipeService {
     void deleteEquipeById(Long equipeId);
     List<Equipe> getAllEquipes();
     Equipe getEquipeById(Long equipeId);
+
+
 }

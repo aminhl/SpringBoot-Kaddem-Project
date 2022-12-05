@@ -18,6 +18,8 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
     List<Etudiant> findByNomEOrPrenomE(String nomE,String prenomE);
 
+    List<Etudiant> findByNomE(String nomE);
+
     List<Etudiant> findByOption(Option option);
 
     List<Etudiant> findByClubNomClub(String nomClub);

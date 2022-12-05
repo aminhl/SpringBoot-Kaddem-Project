@@ -7,13 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -148,6 +142,11 @@ public class EtudiantService implements IEtudiantService {
     }
 
     @Override
+    public List<Etudiant> findetudiantByName(String nomE) {
+        return etudiantRepository.findByNomE(nomE);
+    }
+
+    @Override
     public List<Etudiant> ShowStudentbyOption(Option option) {
         return etudiantRepository.findByOption(option);
     }
@@ -162,6 +161,21 @@ public class EtudiantService implements IEtudiantService {
         List<Etudiant> etudiantList = etudiantRepository.findAll();
         TreeSet<Etudiant> collect = etudiantList.stream().collect(Collectors.toCollection(TreeSet::new));
         return collect;
+    }
+
+    @Override
+    public Optional<Departement> findDepartementByname(String nomDep) {
+        return departementRepository.findDepartementByNomDepart(nomDep);
+    }
+
+    @Override
+    public List<Equipe> findEquipeByNomEquipe(String nomEqu) {
+        return equipeRepository.findEquipeByNomEquipe(nomEqu);
+    }
+
+    @Override
+    public List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContrat(Specialite specialite, Date datededebut, Date datedefin,Long montant) {
+        return contratRepository.findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(specialite,datededebut,datedefin,montant);
     }
 
 }
