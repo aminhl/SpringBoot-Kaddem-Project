@@ -63,9 +63,6 @@
             <optional>true</optional>
         </dependency>
 
-
-        </dependency>
-
     </dependencies>
 
     <build>
