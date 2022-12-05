@@ -96,11 +96,11 @@ public class ContratService implements IContratService {
 
     @Scheduled(cron = "* * */13 * * *")
     public String retrieveAndUpdateStatusContrat() throws ParseException {
-        LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String format = date.plusDays(15).format(formatter);
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(format);
-     contratRepository.findContratsByDateFinContrat(date1);
+//         LocalDateTime date = LocalDateTime.now();
+//         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//         String format = date.plusDays(15).format(formatter);
+//         Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(format);
+//      contratRepository.findContratsByDateFinContrat(date1);
         return null;
     }
     
@@ -125,7 +125,7 @@ public class ContratService implements IContratService {
     }
 
     @Override
-    @Scheduled(cron = "* * * * */29 * *")
+    @Scheduled(cron = "* * * * */29 * ")
     public void reductionOnRandomContrat() {
         Long randomIdContrat = getRandomIdContrat();
         Contrat contratGotReduction = contratRepository.findById(randomIdContrat).orElse(null);
