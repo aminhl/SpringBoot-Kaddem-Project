@@ -74,20 +74,10 @@ public class ProfessorController {
     }
 
 
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    //TODO ADD EXPOSING METHOD LIKE @PostMapping ...
-    public Professor addAndAssignProfessorToEquipeAndContract(Professor Professor, Long idContrat, Long idEquipe) {
-        return null;
-    }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    //TODO ADD EXPOSING METHOD LIKE @PostMapping ..
-    public void deleteProfessorById(Long professorId) {
-        //TODO ADD THE METHOD BEHAVIOR
-
     @GetMapping("getProfessorByAnything")
-    List <Professor> findProfessorsByFirstNameOrLastNameOrPhoneOrEmail(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName, @RequestParam(required = false)
-     String phone, @RequestParam(required = false) String email,@RequestParam(required = false) Specialite spec ) {
+    List<Professor> findProfessorsByFirstNameOrLastNameOrPhoneOrEmail(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName, @RequestParam(required = false)
+     String phone, @RequestParam(required = false) String email,@RequestParam(required = false) Specialite spec )
+        {
         return professorService.findByFirstNameOrLastNameOrPhoneOrEmailOrSpecialityAndFirstNameIsNotNullAndLastNameIsNotNullAndPhoneIsNotNullAndEmailIsNotNullAndSpecialityIsNotNull (firstName,lastName,phone,email,spec);
     }
     @DeleteMapping("deleteProfById")

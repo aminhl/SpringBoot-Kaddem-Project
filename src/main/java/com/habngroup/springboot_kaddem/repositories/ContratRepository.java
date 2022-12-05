@@ -18,7 +18,6 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
     public List <ArchivePercentType> getPercentageGroupByArchiveStatus();
 
     List<Contrat> findContratsByDateFinContrat(Date date);
-}
 
     @Query("select c from Contrat c where c.etudiant = ?1")
     List<Contrat> findContratByEtudiant(Etudiant etudiant);
