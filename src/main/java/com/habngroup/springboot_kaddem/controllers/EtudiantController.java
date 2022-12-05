@@ -1,14 +1,18 @@
 package com.habngroup.springboot_kaddem.controllers;
 
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 import com.habngroup.springboot_kaddem.entities.Departement;
 import com.habngroup.springboot_kaddem.entities.Etudiant;
+import com.habngroup.springboot_kaddem.entities.Option;
 import com.habngroup.springboot_kaddem.services.IEtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.TreeSet;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/")
@@ -94,5 +98,24 @@ public class EtudiantController {
     void assignEtudiantToClub(@PathVariable("etudiantId") Long etudiantId, @PathVariable("clubId") Long clubId){
         iEtudiantService.AssignEtudiantToClub(etudiantId, clubId);
     }
-
+    @GetMapping("/findetudiantByNameOrLastName/")
+    List<Etudiant> findetudiantByNameOrLastName(@RequestParam(required = false) String nomE , @RequestParam(required = false) String prenomE)
+    {
+        return iEtudiantService.findetudiantByNameOrLastName(nomE,prenomE);
+    }
+    @GetMapping("/ShowStudentbyOption/")
+    List<Etudiant> ShowStudentbyOption(@RequestParam(required = false) Option option )
+    {
+        return iEtudiantService.ShowStudentbyOption(option);
+    }
+    @GetMapping("/ShowStudentbyNomClub/")
+    List<Etudiant> ShowStudentbyNomClub(@RequestParam(required = false) String nomClub )
+    {
+        return iEtudiantService.ShowStudentbyNomClub(nomClub);
+    }
+    @GetMapping("/TriEtudiantbyName/")
+    TreeSet<Etudiant> TriEtudiantbyName()
+    {
+        return iEtudiantService.TriEtudiantbyName();
+    }
 }

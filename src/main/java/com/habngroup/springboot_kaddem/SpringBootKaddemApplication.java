@@ -29,7 +29,7 @@ public class SpringBootKaddemApplication {
     {
        return new BCryptPasswordEncoder(10);
    }
-//
+
 //    @Bean
 //    CommandLineRunner run(AppUserService appUserService){
 //        return args -> {
