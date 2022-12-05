@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,12 +20,12 @@ public class Universite implements Serializable {
     @Column(name = "idUniv")
     private Long idUniv;
     private String nomUniv;
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Departement> departements;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Etudiant>etudiants;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Professor>professors;
 }
