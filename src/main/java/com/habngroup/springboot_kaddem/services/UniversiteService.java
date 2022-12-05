@@ -8,8 +8,9 @@ import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
 import com.habngroup.springboot_kaddem.repositories.UniversiteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -84,5 +85,22 @@ public class UniversiteService implements IUniversiteService {
         universiteRepository.save(universite);
     }
 
+    @Override
+    public List<Etudiant> retrieveEtudiantByUniversite(Long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite).orElseThrow(() -> new IllegalStateException("University with id " + idUniversite + "does not exist"));
+        return universite.getEtudiants().stream().toList();
+    }
 
-}
+    @Override
+    public TreeSet<Universite> getUniversitiesSorted() {
+        List<Universite> all = universiteRepository.findAll();
+        TreeSet<Universite> collect = all.stream().collect(Collectors.toCollection(TreeSet::new));
+        return  collect;
+    }
+
+
+ }
+
+
+
+

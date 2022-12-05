@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.TreeSet;
 
 @RestController
 @CrossOrigin
@@ -23,6 +24,11 @@ public class UniversiteController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Universite> getAllUniversites(){
         return iUniversiteService.getAllUniversites();
+    }
+
+    @GetMapping("/getUniversitiesSorted")
+    TreeSet<Universite> getUniversitiesSorted(){
+        return iUniversiteService.getUniversitiesSorted();
     }
 
     @GetMapping("/getUniversite/{universiteId}")
@@ -72,5 +78,12 @@ public class UniversiteController {
     public void assignUniversiteToEtudiant(@PathVariable("universiteId") Long universiteId,@PathVariable("etudiantId") Long etudiantId){
         iUniversiteService.assignUniversiteToEtudiant(universiteId,etudiantId);
     }
+
+
+    @GetMapping("/retrieveEtudiantsByUniversite/{universiteId}")
+    List<Etudiant> retrieveEtudiantByUniversite(@PathVariable("universiteId")Long universityId){
+        return iUniversiteService.retrieveEtudiantByUniversite(universityId);
+    }
+
 
 }
