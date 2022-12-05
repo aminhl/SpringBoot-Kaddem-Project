@@ -1,6 +1,5 @@
 package com.habngroup.springboot_kaddem.services;
 
-import com.habngroup.springboot_kaddem.entities.Departement;
 import com.habngroup.springboot_kaddem.entities.DetailEquipe;
 import com.habngroup.springboot_kaddem.repositories.DetailEquipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

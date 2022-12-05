@@ -7,11 +7,21 @@ import com.habngroup.springboot_kaddem.entities.Specialite;
 import com.habngroup.springboot_kaddem.repositories.ContratRepository;
 import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
 import lombok.AllArgsConstructor;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -83,6 +93,17 @@ public class ContratService implements IContratService {
     }
 
     @Override
+
+    @Scheduled(cron = "* * */13 * * *")
+    public String retrieveAndUpdateStatusContrat() throws ParseException {
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String format = date.plusDays(15).format(formatter);
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(format);
+     contratRepository.findContratsByDateFinContrat(date1);
+        return null;
+    }
+    
     public List<Contrat> findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(Date dateDebut, Date dateFin, Specialite specialite, boolean archive, Long montantContrat) {
         return contratRepository.findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(dateDebut, dateFin, specialite, archive, montantContrat);
     }
@@ -96,6 +117,7 @@ public class ContratService implements IContratService {
     public Long nbContratsValides(Date dateDebut, Date dateFin) {
         return contratRepository.nbContratsValides(dateDebut, dateFin);
     }
+
 
     @Override
     public Long getRandomIdContrat() {
@@ -111,5 +133,6 @@ public class ContratService implements IContratService {
             contratGotReduction.setMontantContrat((long) ((contratGotReduction.getMontantContrat()-contratGotReduction.getMontantContrat()*0.15)));
         contratRepository.save(contratGotReduction);
     }
+
 
 }
