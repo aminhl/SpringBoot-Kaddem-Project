@@ -24,4 +24,8 @@ public interface IContratService  {
 
     List<Contrat> findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(Date dateDebut, Date dateFin, Specialite specialite,
                                                                                                  boolean archive, Long montantContrat);
+    List<Contrat> getContratsBetween(Date dateDebut, Date dateFin);
+    Long nbContratsValides(Date dateDebut, Date dateFin);
+    Long getRandomIdContrat();
+    void reductionOnRandomContrat();
 }

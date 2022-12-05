@@ -22,4 +22,6 @@ public interface IEtudiantService {
 
     List<Contrat> getAllContratByIdEtudiant(Long idEtudiant);
 
+    void AssignEtudiantToClub(Long etudiantId, Long clubId);
+
 }
