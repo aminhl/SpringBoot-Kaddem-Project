@@ -1,18 +1,20 @@
 package com.habngroup.springboot_kaddem.services;
 
-import com.habngroup.springboot_kaddem.entities.Contrat;
-import com.habngroup.springboot_kaddem.entities.Departement;
-import com.habngroup.springboot_kaddem.entities.Equipe;
-import com.habngroup.springboot_kaddem.entities.Etudiant;
-import com.habngroup.springboot_kaddem.repositories.ContratRepository;
-import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
-import com.habngroup.springboot_kaddem.repositories.EquipeRepository;
-import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
+import com.habngroup.springboot_kaddem.entities.*;
+import com.habngroup.springboot_kaddem.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Service
 public class EtudiantService implements IEtudiantService {
@@ -20,13 +22,15 @@ public class EtudiantService implements IEtudiantService {
     private final EquipeRepository equipeRepository;
     private final ContratRepository contratRepository;
     private final DepartementRepository departementRepository;
+    private final ClubRepository clubRepository;
 
     @Autowired
-    public EtudiantService(EtudiantRepository etudiantRepository, EquipeRepository equipeRepository, ContratRepository contratRepository, DepartementRepository departementRepository) {
+    public EtudiantService(EtudiantRepository etudiantRepository, EquipeRepository equipeRepository, ContratRepository contratRepository, DepartementRepository departementRepository, ClubRepository clubRepository) {
         this.etudiantRepository = etudiantRepository;
         this.equipeRepository = equipeRepository;
         this.contratRepository = contratRepository;
         this.departementRepository = departementRepository;
+        this.clubRepository = clubRepository;
     }
 
     @Override
@@ -116,6 +120,48 @@ public class EtudiantService implements IEtudiantService {
                     " does not exist"));
             return contratRepository.findContratByEtudiant(etudiant);
 
+    }
+    @Override
+    public void AssignEtudiantToClub(Long etudiantId, Long clubId) {
+        Etudiant etudiant = etudiantRepository.findById(etudiantId).orElse(null);
+        Club club = clubRepository.findById(clubId).orElse(null);
+        etudiant.setClub(club);
+        etudiantRepository.save(etudiant);
+    }
+
+    @Override
+    @Scheduled(cron = "* * */13 * * *")
+    public String retrieveAndUpdateStatusContratbyEtudiant() throws ParseException {
+      /*  LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String format = date.plusDays(15).format(formatter);
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(format);
+        List<Contrat> contratList =contratRepository.findContratsByDateFinContrat(date1);
+        System.out.println(contratList);*/
+        return null;
+    }
+
+    @Override
+    public List<Etudiant> findetudiantByNameOrLastName(String nomE, String prenomE) {
+
+        return etudiantRepository.findByNomEOrPrenomE(nomE,prenomE);
+    }
+
+    @Override
+    public List<Etudiant> ShowStudentbyOption(Option option) {
+        return etudiantRepository.findByOption(option);
+    }
+
+    @Override
+    public List<Etudiant> ShowStudentbyNomClub(String nomClub) {
+        return etudiantRepository.findByClubNomClub(nomClub);
+    }
+
+    @Override
+    public TreeSet<Etudiant> TriEtudiantbyName() {
+        List<Etudiant> etudiantList = etudiantRepository.findAll();
+        TreeSet<Etudiant> collect = etudiantList.stream().collect(Collectors.toCollection(TreeSet::new));
+        return collect;
     }
 
 }

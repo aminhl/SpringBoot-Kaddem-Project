@@ -5,22 +5,21 @@ import com.habngroup.springboot_kaddem.entities.Etudiant;
 import com.habngroup.springboot_kaddem.entities.Universite;
 import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
 import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
-import com.habngroup.springboot_kaddem.repositories.ProfessorRepo;
 import com.habngroup.springboot_kaddem.repositories.UniversiteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Service
 @AllArgsConstructor
-public class UniversiteService implements IUniversiteService{
+public class UniversiteService implements IUniversiteService {
 
     private final UniversiteRepository universiteRepository;
     private final DepartementRepository departementRepository;
     private final EtudiantRepository etudiantRepository;
-    private final ProfessorRepo professorRepository;
+
     @Override
     public void addUniversite(Universite universite) {
         // TODO checking universite !existence before inserting
@@ -31,13 +30,12 @@ public class UniversiteService implements IUniversiteService{
     public void updateUniversite(Long universiteId, Universite universite) {
         // TODO checking universite existence before updating
         Universite universiteToUpdate = getUniversiteById(universiteId);
-        if (universiteToUpdate != null){
-            if (universite != null && !Objects.equals(universiteToUpdate, universite)){
+        if (universiteToUpdate != null) {
+            if (universite != null && !Objects.equals(universiteToUpdate, universite)) {
                 universiteToUpdate.setNomUniv(universite.getNomUniv());
                 universiteRepository.save(universite);
             }
-        }
-        else throw new IllegalStateException("Univeriste with id " + universiteId + " does not exist");
+        } else throw new IllegalStateException("Univeriste with id " + universiteId + " does not exist");
 
     }
 
@@ -63,6 +61,7 @@ public class UniversiteService implements IUniversiteService{
         return universiteRepository.findById(universiteId)
                 .orElseThrow(() -> new IllegalStateException("Universite with id " + universiteId + " does not exist"));
     }
+
     @Override
     public void assignUniversiteToDepartement(Long idUniversite, Long idDepartement) {
         Universite universite = universiteRepository.findById(idUniversite).orElse(null);
@@ -100,4 +99,8 @@ public class UniversiteService implements IUniversiteService{
     }
 
 
-}
+ }
+
+
+
+

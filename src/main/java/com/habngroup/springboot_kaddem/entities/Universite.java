@@ -21,14 +21,13 @@ public class Universite implements Serializable, Comparable {
     @Column(name = "idUniv")
     private Long idUniv;
     private String nomUniv;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Departement> departements;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Etudiant>etudiants;
-
-
 
     @Override
     public int compareTo(Object o) {

@@ -1,16 +1,21 @@
 package com.habngroup.springboot_kaddem.controllers;
 
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.habngroup.springboot_kaddem.entities.Contrat;
 import com.habngroup.springboot_kaddem.entities.Departement;
 import com.habngroup.springboot_kaddem.entities.Etudiant;
+import com.habngroup.springboot_kaddem.entities.Option;
 import com.habngroup.springboot_kaddem.services.IEtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.TreeSet;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200/")
 public class EtudiantController {
     private final IEtudiantService iEtudiantService;
 
@@ -20,47 +25,56 @@ public class EtudiantController {
     }
 
     @GetMapping("/getEtudiants")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Etudiant> getAllEtudiants(){
         return iEtudiantService.getAllEtudiants();
     }
 
     @GetMapping("/getEtudiant/{etudiantId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     Etudiant getEtudiantById(@PathVariable("etudiantId") Long etudiantId){
         return  iEtudiantService.getEtudiantById(etudiantId);
     }
 
     @PostMapping("/addEtudiant")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     void addEtudiant(@RequestBody Etudiant etudiant){
         iEtudiantService.addEtudiant(etudiant);
     }
 
     @DeleteMapping("/deleteEtudiant")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     void deleteEtudiant(@RequestBody Etudiant etudiant){
         iEtudiantService.deleteEtudiant(etudiant);
     }
 
     @DeleteMapping("/deleteEtudiant/{etudiantId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     void deleteEtudiant(@PathVariable("etudiantId") Long etudiantId){
         iEtudiantService.deleteEtudiantById(etudiantId);
     }
 
     @PutMapping("/updateEtudiant/{etudiantId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     void updateEtudiant(@PathVariable("etudiantId") Long etudiantId, @RequestBody Etudiant etudiant){
         iEtudiantService.updateEtudiant(etudiantId, etudiant);
     }
 
     @GetMapping("/getEtudiantsByDepartement/{departementId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Etudiant> getEtudiantsByDepartement(@PathVariable("departementId") Long departementId){
         return iEtudiantService.getEtudiantsByDepartement(departementId);
     }
 
     @PutMapping("/assignEtudiantToDepartement/{etudiantId}/{departementId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void assignEtudiantToDepartement(@PathVariable("etudiantId") Long etudiantId,
                                             @PathVariable("departementId") Long departementId){
         iEtudiantService.assignEtudiantToDepartement(etudiantId,departementId);
     }
 
     @PostMapping("/addAndAssignEtudiantToEquipeAndContract/{idContrat}/{idEquipe}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     Etudiant addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant etudiant,
                                                      @PathVariable("idContrat") Long idContrat,
                                                      @PathVariable("idEquipe") Long idEquipe
@@ -80,4 +94,28 @@ public class EtudiantController {
         return iEtudiantService.getAllContratByIdEtudiant(idEtudiant);
     }
 
+    @PutMapping("/assignEtudiantToClub/{etudiantId}/{clubId}")
+    void assignEtudiantToClub(@PathVariable("etudiantId") Long etudiantId, @PathVariable("clubId") Long clubId){
+        iEtudiantService.AssignEtudiantToClub(etudiantId, clubId);
+    }
+    @GetMapping("/findetudiantByNameOrLastName/")
+    List<Etudiant> findetudiantByNameOrLastName(@RequestParam(required = false) String nomE , @RequestParam(required = false) String prenomE)
+    {
+        return iEtudiantService.findetudiantByNameOrLastName(nomE,prenomE);
+    }
+    @GetMapping("/ShowStudentbyOption/")
+    List<Etudiant> ShowStudentbyOption(@RequestParam(required = false) Option option )
+    {
+        return iEtudiantService.ShowStudentbyOption(option);
+    }
+    @GetMapping("/ShowStudentbyNomClub/")
+    List<Etudiant> ShowStudentbyNomClub(@RequestParam(required = false) String nomClub )
+    {
+        return iEtudiantService.ShowStudentbyNomClub(nomClub);
+    }
+    @GetMapping("/TriEtudiantbyName/")
+    TreeSet<Etudiant> TriEtudiantbyName()
+    {
+        return iEtudiantService.TriEtudiantbyName();
+    }
 }

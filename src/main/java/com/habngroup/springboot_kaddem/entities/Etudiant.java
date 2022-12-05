@@ -1,5 +1,6 @@
 package com.habngroup.springboot_kaddem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class Etudiant implements Serializable {
+public class Etudiant implements Serializable,Comparable<Etudiant> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +29,18 @@ public class Etudiant implements Serializable {
     private Set<Contrat> contrats;
     @ManyToMany
     private Set<Equipe> equipes;
+    @ManyToOne
+
+    @JsonIgnore
+    private Club club;
+
+    @Override
+    public int compareTo(Etudiant o) {
+        return this.nomE.compareTo(o.nomE);
+    }
+
+    Universite universite;
+    private Club club;
+
 
 }
