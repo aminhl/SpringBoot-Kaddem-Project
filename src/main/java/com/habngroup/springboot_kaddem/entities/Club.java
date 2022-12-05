@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -20,4 +21,6 @@ public class Club implements Serializable {
     private String nomClub;
     private String logoClub;
     private String domaine;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
+    private Set<Etudiant> etudiants;
 }

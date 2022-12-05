@@ -1,13 +1,7 @@
 package com.habngroup.springboot_kaddem.services;
 
-import com.habngroup.springboot_kaddem.entities.Contrat;
-import com.habngroup.springboot_kaddem.entities.Departement;
-import com.habngroup.springboot_kaddem.entities.Equipe;
-import com.habngroup.springboot_kaddem.entities.Etudiant;
-import com.habngroup.springboot_kaddem.repositories.ContratRepository;
-import com.habngroup.springboot_kaddem.repositories.DepartementRepository;
-import com.habngroup.springboot_kaddem.repositories.EquipeRepository;
-import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
+import com.habngroup.springboot_kaddem.entities.*;
+import com.habngroup.springboot_kaddem.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +14,15 @@ public class EtudiantService implements IEtudiantService {
     private final EquipeRepository equipeRepository;
     private final ContratRepository contratRepository;
     private final DepartementRepository departementRepository;
+    private final ClubRepository clubRepository;
 
     @Autowired
-    public EtudiantService(EtudiantRepository etudiantRepository, EquipeRepository equipeRepository, ContratRepository contratRepository, DepartementRepository departementRepository) {
+    public EtudiantService(EtudiantRepository etudiantRepository, EquipeRepository equipeRepository, ContratRepository contratRepository, DepartementRepository departementRepository, ClubRepository clubRepository) {
         this.etudiantRepository = etudiantRepository;
         this.equipeRepository = equipeRepository;
         this.contratRepository = contratRepository;
         this.departementRepository = departementRepository;
+        this.clubRepository = clubRepository;
     }
 
     @Override
@@ -116,6 +112,13 @@ public class EtudiantService implements IEtudiantService {
                     " does not exist"));
             return contratRepository.findContratByEtudiant(etudiant);
 
+    }
+    @Override
+    public void AssignEtudiantToClub(Long etudiantId, Long clubId) {
+        Etudiant etudiant = etudiantRepository.findById(etudiantId).orElse(null);
+        Club club = clubRepository.findById(clubId).orElse(null);
+        etudiant.setClub(club);
+        etudiantRepository.save(etudiant);
     }
 
 }

@@ -76,6 +76,26 @@ public class ContratController {
         return iContratService.findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(dateDebut, dateFin, specialite, archive, montant);
     }
 
+    @GetMapping("/getContratsBetween/{dateDebut}/{dateFin}")
+    List<Contrat> getContratsBetween(@PathVariable("dateDebut") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateDebut,
+                                     @PathVariable("dateFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFin){
+        return iContratService.getContratsBetween(dateDebut, dateFin);
+    }
 
+    @GetMapping("/getNbContratsValides/{dateDebut}/{dateFin}")
+    Long getNbContratsValides(@PathVariable("dateDebut") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateDebut,
+                              @PathVariable("dateFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFin){
+        return iContratService.nbContratsValides(dateDebut, dateFin);
+    }
+
+    @GetMapping("getRandomIdContrat")
+    Long getRandomIdContrat(){
+        return iContratService.getRandomIdContrat();
+    }
+
+    @PutMapping("/contratReduction")
+    void reductionOnRandomContrat(){
+       iContratService.reductionOnRandomContrat();
+    }
 }
 

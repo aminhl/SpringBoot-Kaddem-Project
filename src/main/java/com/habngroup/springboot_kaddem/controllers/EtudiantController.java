@@ -80,4 +80,9 @@ public class EtudiantController {
         return iEtudiantService.getAllContratByIdEtudiant(idEtudiant);
     }
 
+    @PutMapping("/assignEtudiantToClub/{etudiantId}/{clubId}")
+    void assignEtudiantToClub(@PathVariable("etudiantId") Long etudiantId, @PathVariable("clubId") Long clubId){
+        iEtudiantService.AssignEtudiantToClub(etudiantId, clubId);
+    }
+
 }

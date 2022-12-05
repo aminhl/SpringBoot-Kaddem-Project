@@ -8,6 +8,7 @@ import com.habngroup.springboot_kaddem.repositories.ContratRepository;
 import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -86,6 +87,29 @@ public class ContratService implements IContratService {
         return contratRepository.findAllByDateDebutContratOrDateFinContratOrSpecialiteOrArchiveOrMontantContrat(dateDebut, dateFin, specialite, archive, montantContrat);
     }
 
+    @Override
+    public List<Contrat> getContratsBetween(Date dateDebut, Date dateFin) {
+        return  contratRepository.getContratsBetween(dateDebut, dateFin);
+    }
 
+    @Override
+    public Long nbContratsValides(Date dateDebut, Date dateFin) {
+        return contratRepository.nbContratsValides(dateDebut, dateFin);
+    }
+
+    @Override
+    public Long getRandomIdContrat() {
+        return contratRepository.randomIdContrat();
+    }
+
+    @Override
+    @Scheduled(cron = "* * * * */29 * *")
+    public void reductionOnRandomContrat() {
+        Long randomIdContrat = getRandomIdContrat();
+        Contrat contratGotReduction = contratRepository.findById(randomIdContrat).orElse(null);
+        if (contratGotReduction != null)
+            contratGotReduction.setMontantContrat((long) ((contratGotReduction.getMontantContrat()-contratGotReduction.getMontantContrat()*0.15)));
+        contratRepository.save(contratGotReduction);
+    }
 
 }
