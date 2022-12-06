@@ -39,8 +39,9 @@ public class Etudiant implements Serializable,Comparable<Etudiant> {
         return this.nomE.compareTo(o.nomE);
     }
 
-    Universite universite;
-    private Club club;
+    @ManyToOne
+    private Universite universite;
+
 
 
 }

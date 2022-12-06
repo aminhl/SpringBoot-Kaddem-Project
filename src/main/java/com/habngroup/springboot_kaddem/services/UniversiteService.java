@@ -33,7 +33,7 @@ public class UniversiteService implements IUniversiteService {
         if (universiteToUpdate != null) {
             if (universite != null && !Objects.equals(universiteToUpdate, universite)) {
                 universiteToUpdate.setNomUniv(universite.getNomUniv());
-                universiteRepository.save(universite);
+                universiteRepository.save(universiteToUpdate);
             }
         } else throw new IllegalStateException("Univeriste with id " + universiteId + " does not exist");
 
