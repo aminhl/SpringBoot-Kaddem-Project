@@ -25,7 +25,8 @@ public class ProfessorController {
     //TODO REMOVE UNUSED ATTRIBUTE LIKE THESE TWO BELLOW
     private ContratService contratService;
     private DepartementService departementService;
-    @GetMapping("/getProfessors")
+    
+    @GetMapping("getProfessors")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public List<Professor> getAllProfessors() {
         return   professorService.getAllProfessors();
@@ -36,22 +37,14 @@ public class ProfessorController {
         professorService.addProfessor(professor);
     }
 
-    @PutMapping("updateProfessor/{professorId}")
+    @PutMapping("updateProfessor/ {profId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateProfessor(@PathVariable ("professorId") Long professorId , @RequestBody Professor professor) {
-        professorService.updateProfessor(professor);
+    public void updateProfessor( @PathVariable ("profId") Long professorID, @RequestBody Professor professor) {
+        professorService.updateProfessor(professorID,professor);
     }
-    @DeleteMapping("/deleteProfById/{professorId}")
-    public void deleteProfessorById( @PathVariable ("professorId") Long professorId) {
+    @DeleteMapping("deleteProfById/{profId}")
+    public void deleteProfessorById(@PathVariable ("profId") Long professorId) {
         professorService.deleteProfessorById(professorId);
-    }
-
-
-    @DeleteMapping("/deleteProfessor")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteProfessor(@RequestBody Professor professor) {
-        professorService.deleteProfessor(professor);
-    }
 
     @PostMapping("assignProfessorToContrat/{profID}/{contraID}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -63,6 +56,7 @@ public class ProfessorController {
     public void assignProfessorToDepartement( @PathVariable ("profID") Long professorId, @PathVariable ("depID") Long departementId) {
         professorService.assignProfessorToDepartement(professorId, departementId);
     }
+
     @GetMapping("getProfessorsByDepartmentId/{depID}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public List<Professor> getProfessorsByDepartementId(@PathVariable ("depID") Long idDepartement) {
@@ -70,28 +64,27 @@ public class ProfessorController {
       return professorService.getProfessorsByDepartement(idDepartement);
     }
 
-
-
+    @GetMapping("getProfessorByAnything")
     @GetMapping("/getProfessorById/{professorId}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Professor getProfessorById( @PathVariable Long professorId) {
         return professorService.getProfessorById(professorId);
     }
-
-
-    @GetMapping("/getProfessorByAnything")
-    List<Professor> findProfessorsByFirstNameOrLastNameOrPhoneOrEmail(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName, @RequestParam(required = false)
-     String phone, @RequestParam(required = false) String email,@RequestParam(required = false) Specialite spec )
-        {
-        return professorService.findByFirstNameOrLastNameOrPhoneOrEmailOrSpecialityAndFirstNameIsNotNullAndLastNameIsNotNullAndPhoneIsNotNullAndEmailIsNotNullAndSpecialityIsNotNull (firstName,lastName,phone,email,spec);
-    }
-
-
     @GetMapping("getProfessorSumAmount/{profID}/{dateD}/{dateF}")
     public Float getProfessorSumAmount( @PathVariable("profID") Long idP, @PathVariable("dateD") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateD, @PathVariable ("dateF") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateF) {
        return professorService.getProfessorSumAmount(idP, dateD, dateF);
     }
+    public Professor addAndAssignProfessorToEquipeAndContract(Professor Professor, Long idContrat, Long idEquipe) {
+        return null;
+    }
+    @DeleteMapping("deleteProfessor")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteProfessor(Professor professor) {
+        professorService.deleteProfessor(professor);
+    }
+    @GetMapping("getProfessorById/{profId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    public Professor getProfessorById(@PathVariable ("profId")  Long professorId) {
+        return professorService.getProfessorById(professorId);
+    }
 
-
-
-}

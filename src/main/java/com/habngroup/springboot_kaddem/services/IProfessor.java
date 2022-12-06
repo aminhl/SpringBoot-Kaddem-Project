@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IProfessor {
     void addProfessor(Professor professor);
-    void updateProfessor( Professor professor);
+    void updateProfessor( Long idProf, Professor professor);
     void deleteProfessor(Professor professor);
     void deleteProfessorById(Long professorId);
     List<Professor> getAllProfessors();
