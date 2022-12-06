@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-
 public class ProfessorController {
     private ProfessorService professorService;
     private ContratService contratService;
