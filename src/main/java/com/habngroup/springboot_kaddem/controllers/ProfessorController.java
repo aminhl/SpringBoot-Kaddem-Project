@@ -25,16 +25,16 @@ public class ProfessorController {
     //TODO REMOVE UNUSED ATTRIBUTE LIKE THESE TWO BELLOW
     private ContratService contratService;
     private DepartementService departementService;
-    @PostMapping("addProfessor/")
+    @PostMapping("/addProfessor")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void addProfessor(Professor professor) {
         professorService.addProfessor(professor);
     }
 
-    @PutMapping("updateProfessor")
+    @PutMapping("updateProfessor/ {profId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateProfessor( Professor professor) {
-        professorService.updateProfessor(professor);
+    public void updateProfessor( @PathVariable ("profId") Long professorID, @RequestBody Professor professor) {
+        professorService.updateProfessor(professorID,professor);
     }
 
     @DeleteMapping("deleteProfessor")
