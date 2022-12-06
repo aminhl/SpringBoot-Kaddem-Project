@@ -25,22 +25,24 @@ public class ProfessorController {
     //TODO REMOVE UNUSED ATTRIBUTE LIKE THESE TWO BELLOW
     private ContratService contratService;
     private DepartementService departementService;
+    @GetMapping("getProfessors")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    public List<Professor> getAllProfessors() {
+        return   professorService.getAllProfessors();
+    }
     @PostMapping("/addProfessor")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void addProfessor(Professor professor) {
         professorService.addProfessor(professor);
     }
-
     @PutMapping("updateProfessor/ {profId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateProfessor( @PathVariable ("profId") Long professorID, @RequestBody Professor professor) {
         professorService.updateProfessor(professorID,professor);
     }
-
-    @DeleteMapping("deleteProfessor")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteProfessor(Professor professor) {
-        professorService.deleteProfessor(professor);
+    @DeleteMapping("deleteProfById/{profId}")
+    public void deleteProfessorById(@PathVariable ("profId") Long professorId) {
+        professorService.deleteProfessorById(professorId);
     }
 
     @PostMapping("assignProfessorToContrat")
@@ -53,25 +55,12 @@ public class ProfessorController {
     public void assignProfessorToDepartement(Long professorId, Long departementId) {
         professorService.assignProfessorToDepartement(professorId, departementId);
     }
-    @GetMapping("getProfessorsByDepartmentId")
+    @GetMapping("getProfessorsByDepartmentId/{profId}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public List<Professor> getProfessorsByDepartementId(Long idDepartement) {
+    public List<Professor> getProfessorsByDepartementId(@PathVariable ("profId") Long idDepartement) {
 
       return professorService.getProfessorsByDepartement(idDepartement);
     }
-
-    @GetMapping("getProfessors")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public List<Professor> getAllProfessors() {
-        return   professorService.getAllProfessors();
-    }
-
-    @GetMapping("getProfessorById")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public Professor getProfessorById(Long professorId) {
-        return professorService.getProfessorById(professorId);
-    }
-
 
     @GetMapping("getProfessorByAnything")
     List<Professor> findProfessorsByFirstNameOrLastNameOrPhoneOrEmail(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName, @RequestParam(required = false)
@@ -79,11 +68,6 @@ public class ProfessorController {
         {
         return professorService.findByFirstNameOrLastNameOrPhoneOrEmailOrSpecialityAndFirstNameIsNotNullAndLastNameIsNotNullAndPhoneIsNotNullAndEmailIsNotNullAndSpecialityIsNotNull (firstName,lastName,phone,email,spec);
     }
-    @DeleteMapping("deleteProfById")
-    public void deleteProfessorById(Long professorId) {
-        professorService.deleteProfessorById(professorId);
-    }
-
 
     @GetMapping("getProfessorSumAmount")
     public Float getProfessorSumAmount(Long idP, @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateD, @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateF) {
@@ -92,5 +76,14 @@ public class ProfessorController {
     public Professor addAndAssignProfessorToEquipeAndContract(Professor Professor, Long idContrat, Long idEquipe) {
         return null;
     }
-
+    @DeleteMapping("deleteProfessor")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteProfessor(Professor professor) {
+        professorService.deleteProfessor(professor);
+    }
+    @GetMapping("getProfessorById/{profId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    public Professor getProfessorById(@PathVariable ("profId")  Long professorId) {
+        return professorService.getProfessorById(professorId);
+    }
 }
