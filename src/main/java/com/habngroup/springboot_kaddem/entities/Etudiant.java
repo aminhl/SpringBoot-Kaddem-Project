@@ -33,7 +33,9 @@ public class Etudiant implements Serializable,Comparable<Etudiant> {
 
     @JsonIgnore
     private Club club;
-
+    @ManyToOne
+    @JsonIgnore
+    Universite universite;
     @Override
     public int compareTo(Etudiant o) {
         return this.nomE.compareTo(o.nomE);
@@ -41,7 +43,5 @@ public class Etudiant implements Serializable,Comparable<Etudiant> {
 
     @ManyToOne
     private Universite universite;
-
-
 
 }

@@ -60,4 +60,6 @@ public class EquipeService implements IEquipeService{
         return equipeRepository.findById(equipeId)
                 .orElseThrow(() -> new IllegalStateException("Equipe with id" + equipeId + " does not exist"));
     }
+
+
 }

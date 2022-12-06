@@ -20,7 +20,6 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-
 public class ProfessorController {
     private ProfessorService professorService;
     //TODO REMOVE UNUSED ATTRIBUTE LIKE THESE TWO BELLOW
