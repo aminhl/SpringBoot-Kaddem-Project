@@ -69,8 +69,8 @@ public class UniversiteController {
     }
 
     @GetMapping("/retreiveDepartementsByUniversity/{universityId}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    List<Departement> getDepartementsByUniversite(@PathVariable("universityId") Long universityId){
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    List<Departement> retrieveDepartementsByUniversite(@PathVariable("universityId") Long universityId){
         return iUniversiteService.retrieveDepartementsByUniversite(universityId);
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
