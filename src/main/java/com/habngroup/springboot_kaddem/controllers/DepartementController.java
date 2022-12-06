@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 @RestController
 @CrossOrigin
@@ -80,5 +81,9 @@ public class DepartementController {
     Long countnbrprofbydep(@PathVariable("nomDepartement")String nomdepart){
         return iDepartementService.countprofesseurbydepartement(nomdepart);
 
+    }
+    @GetMapping("/getdepartementsorted")
+    List<Departement> getdepartsorted(){
+        return iDepartementService.getdepartementSorted();
     }
 }

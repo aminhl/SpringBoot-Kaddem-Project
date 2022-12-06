@@ -119,4 +119,10 @@ public class DepartementService implements IDepartementService {
         return 0;
     }
 
+    @Override
+    public List<Departement> getdepartementSorted() {
+       return departementRepository.departementsorted();
+
+    }
+
 }
