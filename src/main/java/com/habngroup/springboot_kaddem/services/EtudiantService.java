@@ -84,9 +84,8 @@ public class EtudiantService implements IEtudiantService {
 
     @Override
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant etudiant, Long idContrat, Long idEquipe) {
-        Contrat contrat = contratRepository.findById(idContrat).orElse(null);
-        Equipe equipe = equipeRepository.findById(idEquipe).orElse(null);
-
+        Contrat contrat = contratRepository.findById(idContrat).orElseThrow(() -> new IllegalStateException("Contrat with id " + idContrat + " does not exist"));
+        Equipe equipe = equipeRepository.findById(idEquipe).orElseThrow(() -> new IllegalStateException("Equipe with id " + idEquipe + " does not exist"));
         etudiant.getEquipes().add(equipe);
         contrat.setEtudiant(etudiant);
       return   etudiantRepository.save(etudiant);
@@ -142,7 +141,7 @@ public class EtudiantService implements IEtudiantService {
     }
 
     @Override
-    public List<Etudiant> findetudiantByName(String nomE) {
+    public Etudiant findetudiantByName(String nomE) {
         return etudiantRepository.findByNomE(nomE);
     }
 
@@ -174,7 +173,7 @@ public class EtudiantService implements IEtudiantService {
     }
 
     @Override
-    public List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContrat(Specialite specialite, Date datededebut, Date datedefin,Long montant) {
+    public List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(Specialite specialite, Date datededebut, Date datedefin,Long montant) {
         return contratRepository.findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(specialite,datededebut,datedefin,montant);
     }
 

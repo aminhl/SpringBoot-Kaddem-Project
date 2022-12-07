@@ -4,6 +4,7 @@ import com.habngroup.springboot_kaddem.entities.*;
 import com.habngroup.springboot_kaddem.services.IEquipeService;
 import com.habngroup.springboot_kaddem.services.IEtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,7 +72,7 @@ public class EtudiantController {
         iEtudiantService.assignEtudiantToDepartement(etudiantId,departementId);
     }
 
-    @PostMapping("/addAndAssignEtudiantToEquipeAndContract/{idContrat}/{idEquipe}")
+    @PutMapping("/addAndAssignEtudiantToEquipeAndContract/{idContrat}/{idEquipe}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     Etudiant addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant etudiant,
                                                      @PathVariable("idContrat") Long idContrat,
@@ -102,7 +103,7 @@ public class EtudiantController {
         return iEtudiantService.findetudiantByNameOrLastName(nomE,prenomE);
     }
     @GetMapping("/findetudiantByName/{nomE}")
-    List<Etudiant> findetudiantByName(@PathVariable("nomE") String nomE )
+    Etudiant findetudiantByName(@PathVariable("nomE") String nomE )
     {
         return iEtudiantService.findetudiantByName(nomE);
     }
@@ -116,10 +117,10 @@ public class EtudiantController {
     {
         return iEtudiantService.findEquipeByNomEquipe(nomEqu);
     }
-    @GetMapping("/findContratBySpecialiteAndDateDebutContratAndDateFinContrat/{specialite}/{datededebut}/{datedefin}")
-    List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContrat(@PathVariable("specialite") Specialite specialite, @PathVariable("datededebut") Date datededebut, @PathVariable("montant") Long montant, @PathVariable("datedefin") Date datedefin )
+    @GetMapping("/findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat/{specialite}/{datededebut}/{datedefin}/{montant}")
+    List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(@PathVariable("specialite") Specialite specialite, @PathVariable("datededebut") @DateTimeFormat(pattern = "yyyy-MM-dd") Date datededebut, @PathVariable("datedefin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date datedefin , @PathVariable("montant") Long montant )
     {
-        return iEtudiantService.findContratBySpecialiteAndDateDebutContratAndDateFinContrat(specialite,datededebut,datedefin,montant);
+        return iEtudiantService.findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(specialite,datededebut,datedefin,montant);
     }
     @GetMapping("/ShowStudentbyOption/")
     List<Etudiant> ShowStudentbyOption(@RequestParam(required = false) Option option )
