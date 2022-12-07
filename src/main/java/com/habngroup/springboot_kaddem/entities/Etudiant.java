@@ -21,6 +21,7 @@ public class Etudiant implements Serializable,Comparable<Etudiant> {
     private Long idEtudiant;
     private String prenomE;
     private String nomE;
+    private String emailE;
     @Enumerated(EnumType.STRING)
     private Option option;
     @ManyToOne
