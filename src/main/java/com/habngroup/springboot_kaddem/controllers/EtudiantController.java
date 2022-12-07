@@ -1,8 +1,8 @@
 package com.habngroup.springboot_kaddem.controllers;
 
 import com.habngroup.springboot_kaddem.entities.*;
-import com.habngroup.springboot_kaddem.services.IEquipeService;
 import com.habngroup.springboot_kaddem.services.IEtudiantService;
+import com.habngroup.springboot_kaddem.services.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,10 +17,12 @@ import java.util.TreeSet;
 @CrossOrigin(origins = "http://localhost:4200/")
 public class EtudiantController {
     private final IEtudiantService iEtudiantService;
+    private final SendMailService sendMailService;
 
     @Autowired
-    public EtudiantController(IEtudiantService iEtudiantService) {
+    public EtudiantController(IEtudiantService iEtudiantService, SendMailService sendMailService) {
         this.iEtudiantService = iEtudiantService;
+        this.sendMailService = sendMailService;
     }
 
     @GetMapping("/getEtudiants")
@@ -136,5 +138,11 @@ public class EtudiantController {
     TreeSet<Etudiant> TriEtudiantbyName()
     {
         return iEtudiantService.TriEtudiantbyName();
+    }
+
+    @PostMapping("/sendmail")
+    long sendmail(@RequestBody Mail mail)
+    {
+        return sendMailService.sendMail(mail);
     }
 }
