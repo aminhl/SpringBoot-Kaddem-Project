@@ -5,10 +5,16 @@ import com.habngroup.springboot_kaddem.entities.Etudiant;
 import com.habngroup.springboot_kaddem.entities.Option;
 import com.habngroup.springboot_kaddem.entities.Professor;
 import com.habngroup.springboot_kaddem.services.IDepartementService;
+import com.habngroup.springboot_kaddem.utils.ExportpdfService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -96,4 +102,16 @@ public class DepartementController {
     List<Departement> getdepartsorted() {
         return iDepartementService.getdepartementSorted();
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+        @GetMapping("exportdepartpdf")
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> exportTermsPdf() {
+        List<Departement> departements = iDepartementService.getAllDepartements();
+        ByteArrayInputStream bais = ExportpdfService.departementsPDFReport(departements);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("content-Disposition","inline;filename=departements.pdf");
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
+    }
+
 }
