@@ -45,46 +45,52 @@ public class ProfessorController {
     @DeleteMapping("deleteProfById/{profId}")
     public void deleteProfessorById(@PathVariable ("profId") Long professorId) {
         professorService.deleteProfessorById(professorId);
+    }
+        @PostMapping("assignProfessorToContrat/{profID}/{contraID}")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
+        public void assignProfessorToContrat (@PathVariable("profID") Long professorId, @PathVariable("contraID") Long
+        CntratId){
+            professorService.assignProfessorToContrat(professorId, CntratId);
+        }
+        @PostMapping("assignProfessorToDepartment/{profID}/{depID}")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
+        public void assignProfessorToDepartement (@PathVariable("profID") Long professorId, @PathVariable("depID") Long
+        departementId){
+            professorService.assignProfessorToDepartement(professorId, departementId);
+        }
 
-    @PostMapping("assignProfessorToContrat/{profID}/{contraID}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void assignProfessorToContrat( @PathVariable ("profID") Long professorId, @PathVariable ("contraID") Long CntratId) {
-        professorService.assignProfessorToContrat(professorId, CntratId);
-    }
-    @PostMapping("assignProfessorToDepartment/{profID}/{depID}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void assignProfessorToDepartement( @PathVariable ("profID") Long professorId, @PathVariable ("depID") Long departementId) {
-        professorService.assignProfessorToDepartement(professorId, departementId);
-    }
+        @GetMapping("getProfessorsByDepartmentId/{depID}")
+        @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+        public List<Professor> getProfessorsByDepartementId (@PathVariable("depID") Long idDepartement){
 
-    @GetMapping("getProfessorsByDepartmentId/{depID}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public List<Professor> getProfessorsByDepartementId(@PathVariable ("depID") Long idDepartement) {
+            return professorService.getProfessorsByDepartement(idDepartement);
+        }
 
-      return professorService.getProfessorsByDepartement(idDepartement);
-    }
+        //TODO:resolve this 
+//        @GetMapping("getProfessorByAnything")
+//        @GetMapping("/getProfessorById/{professorId}")
+//        @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+//        public Professor getProfessorById (@PathVariable Long professorId){
+//            return professorService.getProfessorById(professorId);
+//        }
+        @GetMapping("getProfessorSumAmount/{profID}/{dateD}/{dateF}")
+        public Float getProfessorSumAmount (@PathVariable("profID") Long
+        idP, @PathVariable("dateD") @DateTimeFormat(pattern = "yyyy-MM-dd") Date
+        dateD, @PathVariable("dateF") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateF){
+            return professorService.getProfessorSumAmount(idP, dateD, dateF);
+        }
+        public Professor addAndAssignProfessorToEquipeAndContract (Professor Professor, Long idContrat, Long idEquipe){
+            return null;
+        }
+        @DeleteMapping("deleteProfessor")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
+        public void deleteProfessor (Professor professor){
+            professorService.deleteProfessor(professor);
+        }
+        @GetMapping("getProfessorById/{profId}")
+        @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+        public Professor getProfessorById (@PathVariable("profId") Long professorId){
+            return professorService.getProfessorById(professorId);
+        }
 
-    @GetMapping("getProfessorByAnything")
-    @GetMapping("/getProfessorById/{professorId}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public Professor getProfessorById( @PathVariable Long professorId) {
-        return professorService.getProfessorById(professorId);
     }
-    @GetMapping("getProfessorSumAmount/{profID}/{dateD}/{dateF}")
-    public Float getProfessorSumAmount( @PathVariable("profID") Long idP, @PathVariable("dateD") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateD, @PathVariable ("dateF") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateF) {
-       return professorService.getProfessorSumAmount(idP, dateD, dateF);
-    }
-    public Professor addAndAssignProfessorToEquipeAndContract(Professor Professor, Long idContrat, Long idEquipe) {
-        return null;
-    }
-    @DeleteMapping("deleteProfessor")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteProfessor(Professor professor) {
-        professorService.deleteProfessor(professor);
-    }
-    @GetMapping("getProfessorById/{profId}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public Professor getProfessorById(@PathVariable ("profId")  Long professorId) {
-        return professorService.getProfessorById(professorId);
-    }
-
