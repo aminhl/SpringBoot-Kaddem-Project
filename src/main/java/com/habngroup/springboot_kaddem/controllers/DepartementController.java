@@ -108,7 +108,7 @@ public class DepartementController {
     @ResponseBody
     public ResponseEntity<InputStreamResource> exportTermsPdf() {
         List<Departement> departements = iDepartementService.getAllDepartements();
-        ByteArrayInputStream bais = ExportpdfService.departementsPDFReport(departements);
+        ByteArrayInputStream bais = ExportpdfService.departementsPDFReport("List des departement:","Les departements",departements,"getNomDepart");
         HttpHeaders headers = new HttpHeaders();
         headers.add("content-Disposition","inline;filename=departements.pdf");
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
