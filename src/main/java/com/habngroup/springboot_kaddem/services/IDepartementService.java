@@ -8,6 +8,7 @@ import com.habngroup.springboot_kaddem.entities.Professor;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public interface IDepartementService {
     void addDepartement(Departement departement);
@@ -22,4 +23,6 @@ public interface IDepartementService {
     public Map<Option, Long> displaynbretudiantbyoption(String nomDepartement);
     public Map<String, List<Etudiant>> alletudiantbyoptiondepartement(String option);
     public long countprofesseurbydepartement(String nomDepart);
+    List<Departement> getdepartementSorted();
+
 }

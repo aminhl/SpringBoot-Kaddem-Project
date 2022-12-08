@@ -32,6 +32,8 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
     @Query(value = "SELECT contrat.id_contrat FROM contrat ORDER BY RAND () LIMIT 1", nativeQuery = true)
     Long randomIdContrat();
 
+    List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(Specialite specialite, Date datededebut , Date datedefin,Long montant);
+
 }
 
 

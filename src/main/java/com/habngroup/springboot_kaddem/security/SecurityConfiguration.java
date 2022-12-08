@@ -43,6 +43,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeHttpRequests().antMatchers("/login/**").permitAll();
         httpSecurity.authorizeHttpRequests().antMatchers("/user/save/**").permitAll();
         httpSecurity.authorizeHttpRequests().antMatchers("/swagger-ui/**").permitAll();
+        httpSecurity.authorizeHttpRequests().antMatchers("/role/**").permitAll();
         // httpSecurity.authorizeHttpRequests().antMatchers(GET,"/api/user/**").hasAnyAuthority("ROLE_USER");
         // httpSecurity.authorizeHttpRequests().antMatchers(POST,"/api/user/save/**").hasAnyAuthority("ROLE_ADMIN");
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated()

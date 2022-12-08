@@ -20,78 +20,77 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-
 public class ProfessorController {
     private ProfessorService professorService;
     //TODO REMOVE UNUSED ATTRIBUTE LIKE THESE TWO BELLOW
     private ContratService contratService;
     private DepartementService departementService;
-    @PostMapping("addProfessor/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void addProfessor(Professor professor) {
-        professorService.addProfessor(professor);
-    }
-
-    @PutMapping("updateProfessor")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateProfessor( Professor professor) {
-        professorService.updateProfessor(professor);
-    }
-
-    @DeleteMapping("deleteProfessor")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteProfessor(Professor professor) {
-        professorService.deleteProfessor(professor);
-    }
-
-    @PostMapping("assignProfessorToContrat")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void assignProfessorToContrat(Long professorId, Long CntratId) {
-        professorService.assignProfessorToContrat(professorId, CntratId);
-    }
-    @PostMapping("assignProfessorToDepartment")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void assignProfessorToDepartement(Long professorId, Long departementId) {
-        professorService.assignProfessorToDepartement(professorId, departementId);
-    }
-    @GetMapping("getProfessorsByDepartmentId")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public List<Professor> getProfessorsByDepartementId(Long idDepartement) {
-
-      return professorService.getProfessorsByDepartement(idDepartement);
-    }
-
+    
     @GetMapping("getProfessors")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public List<Professor> getAllProfessors() {
         return   professorService.getAllProfessors();
     }
-
-    @GetMapping("getProfessorById")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public Professor getProfessorById(Long professorId) {
-        return professorService.getProfessorById(professorId);
+    @PostMapping("/addProfessor")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void addProfessor(@RequestBody  Professor professor) {
+        professorService.addProfessor(professor);
     }
 
-
-    @GetMapping("getProfessorByAnything")
-    List<Professor> findProfessorsByFirstNameOrLastNameOrPhoneOrEmail(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName, @RequestParam(required = false)
-     String phone, @RequestParam(required = false) String email,@RequestParam(required = false) Specialite spec )
-        {
-        return professorService.findByFirstNameOrLastNameOrPhoneOrEmailOrSpecialityAndFirstNameIsNotNullAndLastNameIsNotNullAndPhoneIsNotNullAndEmailIsNotNullAndSpecialityIsNotNull (firstName,lastName,phone,email,spec);
+    @PutMapping("updateProfessor/ {profId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void updateProfessor( @PathVariable ("profId") Long professorID, @RequestBody Professor professor) {
+        professorService.updateProfessor(professorID,professor);
     }
-    @DeleteMapping("deleteProfById")
-    public void deleteProfessorById(Long professorId) {
+    @DeleteMapping("deleteProfById/{profId}")
+    public void deleteProfessorById(@PathVariable ("profId") Long professorId) {
         professorService.deleteProfessorById(professorId);
     }
+        @PostMapping("assignProfessorToContrat/{profID}/{contraID}")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
+        public void assignProfessorToContrat (@PathVariable("profID") Long professorId, @PathVariable("contraID") Long
+        CntratId){
+            professorService.assignProfessorToContrat(professorId, CntratId);
+        }
+        @PostMapping("assignProfessorToDepartment/{profID}/{depID}")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
+        public void assignProfessorToDepartement (@PathVariable("profID") Long professorId, @PathVariable("depID") Long
+        departementId){
+            professorService.assignProfessorToDepartement(professorId, departementId);
+        }
 
+        @GetMapping("getProfessorsByDepartmentId/{depID}")
+        @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+        public List<Professor> getProfessorsByDepartementId (@PathVariable("depID") Long idDepartement){
 
-    @GetMapping("getProfessorSumAmount")
-    public Float getProfessorSumAmount(Long idP, @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateD, @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateF) {
-       return professorService.getProfessorSumAmount(idP, dateD, dateF);
+            return professorService.getProfessorsByDepartement(idDepartement);
+        }
+
+        //TODO:resolve this 
+//        @GetMapping("getProfessorByAnything")
+//        @GetMapping("/getProfessorById/{professorId}")
+//        @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+//        public Professor getProfessorById (@PathVariable Long professorId){
+//            return professorService.getProfessorById(professorId);
+//        }
+        @GetMapping("getProfessorSumAmount/{profID}/{dateD}/{dateF}")
+        public Float getProfessorSumAmount (@PathVariable("profID") Long
+        idP, @PathVariable("dateD") @DateTimeFormat(pattern = "yyyy-MM-dd") Date
+        dateD, @PathVariable("dateF") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateF){
+            return professorService.getProfessorSumAmount(idP, dateD, dateF);
+        }
+        public Professor addAndAssignProfessorToEquipeAndContract (Professor Professor, Long idContrat, Long idEquipe){
+            return null;
+        }
+        @DeleteMapping("deleteProfessor")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
+        public void deleteProfessor (Professor professor){
+            professorService.deleteProfessor(professor);
+        }
+        @GetMapping("getProfessorById/{profId}")
+        @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+        public Professor getProfessorById (@PathVariable("profId") Long professorId){
+            return professorService.getProfessorById(professorId);
+        }
+
     }
-    public Professor addAndAssignProfessorToEquipeAndContract(Professor Professor, Long idContrat, Long idEquipe) {
-        return null;
-    }
-
-}

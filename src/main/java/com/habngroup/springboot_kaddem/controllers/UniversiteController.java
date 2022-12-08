@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.TreeSet;
 
 @RestController
 @CrossOrigin
@@ -23,6 +24,11 @@ public class UniversiteController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     List<Universite> getAllUniversites(){
         return iUniversiteService.getAllUniversites();
+    }
+
+    @GetMapping("/getUniversitiesSorted")
+    TreeSet<Universite> getUniversitiesSorted(){
+        return iUniversiteService.getUniversitiesSorted();
     }
 
     @GetMapping("/getUniversite/{universiteId}")
@@ -63,14 +69,21 @@ public class UniversiteController {
     }
 
     @GetMapping("/retreiveDepartementsByUniversity/{universityId}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    List<Departement> getDepartementsByUniversite(@PathVariable("universityId") Long universityId){
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    List<Departement> retrieveDepartementsByUniversite(@PathVariable("universityId") Long universityId){
         return iUniversiteService.retrieveDepartementsByUniversite(universityId);
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/assignUniversiteToEtudiant/{universiteId}/{etudiantId}")
     public void assignUniversiteToEtudiant(@PathVariable("universiteId") Long universiteId,@PathVariable("etudiantId") Long etudiantId){
         iUniversiteService.assignUniversiteToEtudiant(universiteId,etudiantId);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/retrieveEtudiantsByUniversite/{universiteId}")
+    List<Etudiant> retrieveEtudiantByUniversite(@PathVariable("universiteId")Long universityId){
+        return iUniversiteService.retrieveEtudiantByUniversite(universityId);
+    }
+
 
 }

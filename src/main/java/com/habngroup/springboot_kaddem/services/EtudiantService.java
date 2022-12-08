@@ -3,10 +3,12 @@ package com.habngroup.springboot_kaddem.services;
 import com.habngroup.springboot_kaddem.entities.*;
 import com.habngroup.springboot_kaddem.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
+import java.text.ParseException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EtudiantService implements IEtudiantService {
@@ -82,9 +84,8 @@ public class EtudiantService implements IEtudiantService {
 
     @Override
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant etudiant, Long idContrat, Long idEquipe) {
-        Contrat contrat = contratRepository.findById(idContrat).orElse(null);
-        Equipe equipe = equipeRepository.findById(idEquipe).orElse(null);
-
+        Contrat contrat = contratRepository.findById(idContrat).orElseThrow(() -> new IllegalStateException("Contrat with id " + idContrat + " does not exist"));
+        Equipe equipe = equipeRepository.findById(idEquipe).orElseThrow(() -> new IllegalStateException("Equipe with id " + idEquipe + " does not exist"));
         etudiant.getEquipes().add(equipe);
         contrat.setEtudiant(etudiant);
       return   etudiantRepository.save(etudiant);
@@ -119,6 +120,61 @@ public class EtudiantService implements IEtudiantService {
         Club club = clubRepository.findById(clubId).orElse(null);
         etudiant.setClub(club);
         etudiantRepository.save(etudiant);
+    }
+
+    @Override
+    @Scheduled(cron = "* * */13 * * *")
+    public String retrieveAndUpdateStatusContratbyEtudiant() throws ParseException {
+      /*  LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String format = date.plusDays(15).format(formatter);
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(format);
+        List<Contrat> contratList =contratRepository.findContratsByDateFinContrat(date1);
+        System.out.println(contratList);*/
+        return null;
+    }
+
+    @Override
+    public List<Etudiant> findetudiantByNameOrLastName(String nomE, String prenomE) {
+
+        return etudiantRepository.findByNomEOrPrenomE(nomE,prenomE);
+    }
+
+    @Override
+    public Etudiant findetudiantByName(String nomE) {
+        return etudiantRepository.findByNomE(nomE);
+    }
+
+    @Override
+    public List<Etudiant> ShowStudentbyOption(Option option) {
+        return etudiantRepository.findByOption(option);
+    }
+
+    @Override
+    public List<Etudiant> ShowStudentbyNomClub(String nomClub) {
+        return etudiantRepository.findByClubNomClub(nomClub);
+    }
+
+    @Override
+    public TreeSet<Etudiant> TriEtudiantbyName() {
+        List<Etudiant> etudiantList = etudiantRepository.findAll();
+        TreeSet<Etudiant> collect = etudiantList.stream().collect(Collectors.toCollection(TreeSet::new));
+        return collect;
+    }
+
+    @Override
+    public Optional<Departement> findDepartementByname(String nomDep) {
+        return departementRepository.findDepartementByNomDepart(nomDep);
+    }
+
+    @Override
+    public List<Equipe> findEquipeByNomEquipe(String nomEqu) {
+        return equipeRepository.findEquipeByNomEquipe(nomEqu);
+    }
+
+    @Override
+    public List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(Specialite specialite, Date datededebut, Date datedefin,Long montant) {
+        return contratRepository.findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(specialite,datededebut,datedefin,montant);
     }
 
 }

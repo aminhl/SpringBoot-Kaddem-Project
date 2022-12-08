@@ -1,23 +1,28 @@
 package com.habngroup.springboot_kaddem.controllers;
 
-import com.habngroup.springboot_kaddem.entities.Contrat;
-import com.habngroup.springboot_kaddem.entities.Departement;
-import com.habngroup.springboot_kaddem.entities.Etudiant;
+import com.habngroup.springboot_kaddem.entities.*;
 import com.habngroup.springboot_kaddem.services.IEtudiantService;
+import com.habngroup.springboot_kaddem.services.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.TreeSet;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/")
 public class EtudiantController {
     private final IEtudiantService iEtudiantService;
+    private final SendMailService sendMailService;
 
     @Autowired
-    public EtudiantController(IEtudiantService iEtudiantService) {
+    public EtudiantController(IEtudiantService iEtudiantService, SendMailService sendMailService) {
         this.iEtudiantService = iEtudiantService;
+        this.sendMailService = sendMailService;
     }
 
     @GetMapping("/getEtudiants")
@@ -69,7 +74,7 @@ public class EtudiantController {
         iEtudiantService.assignEtudiantToDepartement(etudiantId,departementId);
     }
 
-    @PostMapping("/addAndAssignEtudiantToEquipeAndContract/{idContrat}/{idEquipe}")
+    @PutMapping("/addAndAssignEtudiantToEquipeAndContract/{idContrat}/{idEquipe}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     Etudiant addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant etudiant,
                                                      @PathVariable("idContrat") Long idContrat,
@@ -94,5 +99,50 @@ public class EtudiantController {
     void assignEtudiantToClub(@PathVariable("etudiantId") Long etudiantId, @PathVariable("clubId") Long clubId){
         iEtudiantService.AssignEtudiantToClub(etudiantId, clubId);
     }
+    @GetMapping("/findetudiantByNameOrLastName/")
+    List<Etudiant> findetudiantByNameOrLastName(@RequestParam(required = false) String nomE , @RequestParam(required = false) String prenomE)
+    {
+        return iEtudiantService.findetudiantByNameOrLastName(nomE,prenomE);
+    }
+    @GetMapping("/findetudiantByName/{nomE}")
+    Etudiant findetudiantByName(@PathVariable("nomE") String nomE )
+    {
+        return iEtudiantService.findetudiantByName(nomE);
+    }
+    @GetMapping("/findDepartementByname/{nomDep}")
+    Optional<Departement> findDepartementByname(@PathVariable("nomDep") String nomDep )
+    {
+        return iEtudiantService.findDepartementByname(nomDep);
+    }
+    @GetMapping("/findEquipeByNomEquipe/{nomEqu}")
+    List<Equipe> findEquipeByNomEquipe(@PathVariable("nomEqu") String nomEqu )
+    {
+        return iEtudiantService.findEquipeByNomEquipe(nomEqu);
+    }
+    @GetMapping("/findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat/{specialite}/{datededebut}/{datedefin}/{montant}")
+    List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(@PathVariable("specialite") Specialite specialite, @PathVariable("datededebut") @DateTimeFormat(pattern = "yyyy-MM-dd") Date datededebut, @PathVariable("datedefin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date datedefin , @PathVariable("montant") Long montant )
+    {
+        return iEtudiantService.findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(specialite,datededebut,datedefin,montant);
+    }
+    @GetMapping("/ShowStudentbyOption/")
+    List<Etudiant> ShowStudentbyOption(@RequestParam(required = false) Option option )
+    {
+        return iEtudiantService.ShowStudentbyOption(option);
+    }
+    @GetMapping("/ShowStudentbyNomClub/")
+    List<Etudiant> ShowStudentbyNomClub(@RequestParam(required = false) String nomClub )
+    {
+        return iEtudiantService.ShowStudentbyNomClub(nomClub);
+    }
+    @GetMapping("/TriEtudiantbyName/")
+    TreeSet<Etudiant> TriEtudiantbyName()
+    {
+        return iEtudiantService.TriEtudiantbyName();
+    }
 
+    @PostMapping("/sendmail")
+    long sendmail(@RequestBody Mail mail)
+    {
+        return sendMailService.sendMail(mail);
+    }
 }

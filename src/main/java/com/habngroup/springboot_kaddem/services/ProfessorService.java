@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -29,8 +30,19 @@ public class ProfessorService implements IProfessor{
     }
 
     @Override
-    public void updateProfessor( @RequestBody Professor professor) {
-        professorRepo.save(professor);
+    public void updateProfessor(Long profID, Professor professor) {
+        Professor profToUpdate = getProfessorById(profID);
+        if (profToUpdate != null){
+            if (professor != null && !Objects.equals(profToUpdate, professor)){
+                profToUpdate.setEmail(professor.getEmail());
+                profToUpdate.setPhone(professor.getPhone());
+                profToUpdate.setSpeciality(professor.getSpeciality());
+                profToUpdate.setFirstName(professor.getFirstName());
+                profToUpdate.setLastName(professor.getLastName());
+                professorRepo.save(profToUpdate);
+            }
+        }
+        else throw new IllegalStateException("Contrat with id " + profID + " does not exist");
     }
 
     @Override
