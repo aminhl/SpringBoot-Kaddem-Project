@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UniversiteRepository extends JpaRepository<Universite, Long> {
+    Universite findUniversiteByNomUniv(String nomUniv);
     @Query("select e from Etudiant e where e.universite = ?1")
     List<Universite> findEtudiantByUniversite(Universite universite);
 }

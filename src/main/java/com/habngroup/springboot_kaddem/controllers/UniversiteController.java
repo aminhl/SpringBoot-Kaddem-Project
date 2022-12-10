@@ -85,5 +85,22 @@ public class UniversiteController {
         return iUniversiteService.retrieveEtudiantByUniversite(universityId);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/countUniversites")
+    Long countUniversites(){
+        return iUniversiteService.countUniversites();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/nbrDepartementsByUniversite/{universiteId}")
+    Long nbrDepartementsByUniversite(@PathVariable("universiteId") Long universiteId){
+        return iUniversiteService.nbrDepartementsByUniversite(universiteId);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/findUniversiteByName/{nomUniv}")
+    Universite findUniversiteByName(@PathVariable("nomUniv") String nomUniv){
+        return iUniversiteService.findUniversiteByName(nomUniv);
+    }
 
 }
