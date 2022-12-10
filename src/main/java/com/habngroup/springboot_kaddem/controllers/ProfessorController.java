@@ -60,8 +60,7 @@ public class ProfessorController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void assignProfessorToDepartement(@PathVariable("profID") Long professorId, @PathVariable("depID") Long departementId) {
         professorService.assignProfessorToDepartement(professorId, departementId);
-    }
-
+}
     @GetMapping("getProfessorsByDepartmentId/{depID}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public List<Professor> getProfessorsByDepartementId(@PathVariable("depID") Long idDepartement) {
@@ -101,3 +100,4 @@ public class ProfessorController {
     }
 
 }
+

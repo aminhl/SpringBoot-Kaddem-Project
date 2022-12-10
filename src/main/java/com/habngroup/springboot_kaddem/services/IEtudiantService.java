@@ -27,7 +27,7 @@ public interface IEtudiantService {
     void AssignEtudiantToClub(Long etudiantId, Long clubId);
     String retrieveAndUpdateStatusContratbyEtudiant() throws ParseException;
     List<Etudiant> findetudiantByNameOrLastName(String nomE,String prenomE);
-    List<Etudiant> findetudiantByName(String nomE);
+    Etudiant findetudiantByName(String nomE);
     List<Etudiant> ShowStudentbyOption(Option option);
 
     List<Etudiant> ShowStudentbyNomClub(String nomClub);
@@ -37,6 +37,6 @@ public interface IEtudiantService {
     Optional<Departement> findDepartementByname(String nomDep);
     List<Equipe> findEquipeByNomEquipe(String nomEqu);
 
-    List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContrat(Specialite specialite, Date datededebut , Date datedefin,Long montant);
+    List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(Specialite specialite, Date datededebut , Date datedefin,Long montant);
 
 }
