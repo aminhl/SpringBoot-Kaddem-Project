@@ -1,7 +1,6 @@
 package com.habngroup.springboot_kaddem.services;
 
 import com.habngroup.springboot_kaddem.entities.*;
-import com.habngroup.springboot_kaddem.repositories.EtudiantRepository;
 
 import java.util.List;
 import java.util.TreeSet;
@@ -18,5 +17,7 @@ public interface IUniversiteService {
     void assignUniversiteToEtudiant(Long idUniversite, Long idEtudiant);
     List<Etudiant> retrieveEtudiantByUniversite(Long idUniversite);
     TreeSet<Universite> getUniversitiesSorted();
-
+    Long countUniversites();
+    Long nbrDepartementsByUniversite(Long idUniversite);
+    Universite findUniversiteByName(String nomUniv);
 }

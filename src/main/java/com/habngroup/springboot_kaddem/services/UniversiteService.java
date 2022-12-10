@@ -98,8 +98,23 @@ public class UniversiteService implements IUniversiteService {
         return  collect;
     }
 
+    @Override
+    public Long countUniversites() {
+        return getAllUniversites().stream().count();
+    }
 
- }
+    @Override
+    public Long nbrDepartementsByUniversite(Long idUniversite) {
+        return retrieveDepartementsByUniversite(idUniversite).stream().count();
+    }
+
+    @Override
+    public Universite findUniversiteByName(String nomUniv) {
+        return universiteRepository.findUniversiteByNomUniv(nomUniv);
+    }
+
+
+}
 
 
 

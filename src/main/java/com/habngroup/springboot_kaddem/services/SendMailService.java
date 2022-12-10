@@ -25,7 +25,7 @@ public class SendMailService {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
         simpleMailMessage.setTo(mail.getDestinataire());
-        simpleMailMessage.setFrom("pidevers3a10@gmail.com");
+        simpleMailMessage.setFrom("aymen.khairoune1@gmail.com");
         simpleMailMessage.setSubject(mail.getObject());
         simpleMailMessage.setText(mail.getMessage());
         javaMailSender.send(simpleMailMessage);
