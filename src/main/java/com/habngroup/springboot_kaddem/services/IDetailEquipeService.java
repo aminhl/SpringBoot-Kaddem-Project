@@ -11,4 +11,5 @@ public interface IDetailEquipeService {
     void deleteDetailEquipeById(Long detailEquipeId);
     List<DetailEquipe> getAllDetailEquipes();
     DetailEquipe getDetailEquipeById(Long detailEquipeId);
+    void assignEquipeToDetialEquipe(Long idEquipe,Long idDetailEquipe);
 }

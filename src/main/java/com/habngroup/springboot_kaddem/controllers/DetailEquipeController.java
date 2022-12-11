@@ -53,5 +53,12 @@ public class DetailEquipeController {
     void updateDetailEquipe(@PathVariable("detailEquipeId") Long detailEquipeId, @RequestBody DetailEquipe DetailEquipe){
         iDetailEquipeService.updateDetailEquipe(detailEquipeId, DetailEquipe);
     }
+
+
+    @PutMapping("/assignEquipeToDetialEquipe")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    void assignEquipeToDetialEquipe(@RequestParam("idEquipe") Long idEquipe,@RequestParam("idDetailEquipe") Long idDetailEquipe){
+        iDetailEquipeService.assignEquipeToDetialEquipe(idEquipe,idDetailEquipe);
+    }
     
 }
