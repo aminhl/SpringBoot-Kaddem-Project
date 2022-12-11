@@ -38,5 +38,6 @@ public interface IEtudiantService {
     List<Equipe> findEquipeByNomEquipe(String nomEqu);
 
     List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(Specialite specialite, Date datededebut , Date datedefin,Long montant);
+    void AffectEtudiantToEvent(Long etudiantId, Long idEvent) ;
 
 }

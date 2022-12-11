@@ -1,6 +1,7 @@
 package com.habngroup.springboot_kaddem.controllers;
 
 import com.habngroup.springboot_kaddem.entities.*;
+import com.habngroup.springboot_kaddem.services.EvenementService;
 import com.habngroup.springboot_kaddem.services.IEtudiantService;
 import com.habngroup.springboot_kaddem.services.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,13 @@ import java.util.TreeSet;
 public class EtudiantController {
     private final IEtudiantService iEtudiantService;
     private final SendMailService sendMailService;
+    private final EvenementService evenementService;
 
     @Autowired
-    public EtudiantController(IEtudiantService iEtudiantService, SendMailService sendMailService) {
+    public EtudiantController(IEtudiantService iEtudiantService, SendMailService sendMailService, EvenementService evenementService) {
         this.iEtudiantService = iEtudiantService;
         this.sendMailService = sendMailService;
+        this.evenementService = evenementService;
     }
 
     @GetMapping("/getEtudiants")
@@ -145,4 +148,17 @@ public class EtudiantController {
     {
         return sendMailService.sendMail(mail);
     }
+
+    @GetMapping("/getEvents")
+    List<Evenement> getEvents()
+    {
+        return evenementService.getAllEvents();
+    }
+
+        @PostMapping("/AffectEtudiantToEvent/{idEvent}/{idEtudiant}")
+    void AffectEtudiantToEvent(@PathVariable("idEvent") Long idEvent,@PathVariable("idEtudiant") Long idEtudiant)
+    {
+        iEtudiantService.AffectEtudiantToEvent(idEvent,idEtudiant);
+    }
+
 }

@@ -17,14 +17,16 @@ public class EtudiantService implements IEtudiantService {
     private final ContratRepository contratRepository;
     private final DepartementRepository departementRepository;
     private final ClubRepository clubRepository;
+    private final EvenementRepository evenementRepository;
 
     @Autowired
-    public EtudiantService(EtudiantRepository etudiantRepository, EquipeRepository equipeRepository, ContratRepository contratRepository, DepartementRepository departementRepository, ClubRepository clubRepository) {
+    public EtudiantService(EtudiantRepository etudiantRepository, EquipeRepository equipeRepository, ContratRepository contratRepository, DepartementRepository departementRepository, ClubRepository clubRepository, EvenementRepository evenementRepository) {
         this.etudiantRepository = etudiantRepository;
         this.equipeRepository = equipeRepository;
         this.contratRepository = contratRepository;
         this.departementRepository = departementRepository;
         this.clubRepository = clubRepository;
+        this.evenementRepository = evenementRepository;
     }
 
     @Override
@@ -176,5 +178,11 @@ public class EtudiantService implements IEtudiantService {
     public List<Contrat> findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(Specialite specialite, Date datededebut, Date datedefin,Long montant) {
         return contratRepository.findContratBySpecialiteAndDateDebutContratAndDateFinContratAndMontantContrat(specialite,datededebut,datedefin,montant);
     }
-
+    @Override
+    public void AffectEtudiantToEvent(Long etudiantId, Long idEvent) {
+        Evenement evenement = evenementRepository.findById(idEvent).orElseThrow(() -> new IllegalStateException("Event with id " + idEvent + " does not exist"));
+        Etudiant etudiant = etudiantRepository.findById(etudiantId).orElseThrow(() -> new IllegalStateException("Etudiant with id " + etudiantId + " does not exist"));
+        etudiant.getEvenements().add(evenement);
+        etudiantRepository.save(etudiant);
+    }
 }
