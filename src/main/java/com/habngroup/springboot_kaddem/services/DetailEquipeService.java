@@ -1,7 +1,9 @@
 package com.habngroup.springboot_kaddem.services;
 
 import com.habngroup.springboot_kaddem.entities.DetailEquipe;
+import com.habngroup.springboot_kaddem.entities.Equipe;
 import com.habngroup.springboot_kaddem.repositories.DetailEquipeRepository;
+import com.habngroup.springboot_kaddem.repositories.EquipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.Optional;
 @Service
 public class DetailEquipeService implements IDetailEquipeService{
     private final DetailEquipeRepository detailEquipeRepository;
+    private final EquipeRepository equipeRepository;
 
     @Autowired
-    public DetailEquipeService(DetailEquipeRepository detailEquipeRepository) {
+    public DetailEquipeService(DetailEquipeRepository detailEquipeRepository, EquipeRepository equipeRepository) {
         this.detailEquipeRepository = detailEquipeRepository;
+        this.equipeRepository = equipeRepository;
     }
 
 
@@ -70,5 +74,13 @@ public class DetailEquipeService implements IDetailEquipeService{
     public DetailEquipe getDetailEquipeById(Long detailEquipeId) {
         return detailEquipeRepository.findById(detailEquipeId)
                 .orElseThrow(() -> new IllegalStateException("DetailEquipe does not exist"));
+    }
+
+    @Override
+    public void assignEquipeToDetialEquipe(Long idEquipe, Long idDetailEquipe) {
+        DetailEquipe detailEquipe = detailEquipeRepository.findById(idDetailEquipe).orElse(null);
+        Equipe equipe = equipeRepository.findById(idEquipe).orElse(null);
+        detailEquipe.setEquipe(equipe);
+        detailEquipeRepository.save(detailEquipe);
     }
 }

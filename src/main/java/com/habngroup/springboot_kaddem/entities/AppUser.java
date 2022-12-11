@@ -14,7 +14,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class AppUser {
+public class AppUser  {
 
 
     @Id
