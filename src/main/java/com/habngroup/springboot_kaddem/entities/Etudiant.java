@@ -41,6 +41,7 @@ public class Etudiant implements Serializable,Comparable<Etudiant> {
         return 0 ;
         //this.nomE.compareTo(o.nomE)
     }
-
+    @ManyToMany
+    private Set<Evenement> evenements;
 
 }
