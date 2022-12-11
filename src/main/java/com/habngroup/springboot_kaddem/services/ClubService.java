@@ -56,4 +56,9 @@ public class ClubService implements IClubService{
         return this.clubRepository.findById(clubId)
                 .orElse(null);
     }
+
+    @Override
+    public Club getClubByNomClub(String nomClub) {
+        return this.clubRepository.findClubByNomClub(nomClub).orElse(null);
+    }
 }
