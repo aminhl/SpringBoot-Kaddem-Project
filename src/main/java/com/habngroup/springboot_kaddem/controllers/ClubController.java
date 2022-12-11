@@ -52,4 +52,11 @@ public class ClubController {
     void updateClub(@PathVariable("clubId") Long clubId, @RequestBody Club club){
         iClubService.updateClub(clubId, club);
     }
+
+    @GetMapping("/getClubByNom/{nomClub}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    Club getClubByNom(@PathVariable("nomClub") String nomClub){
+        return iClubService.getClubByNomClub(nomClub);
+    }
+
 }
