@@ -57,7 +57,8 @@ public class DetailEquipeController {
 
     @PutMapping("/assignEquipeToDetialEquipe/{nomEquipe}/{thema}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    void assignEquipeToDetialEquipe(@PathVariable("nomEquipe") String nomEquipe,@PathVariable("thema") String thema){
+    void assignEquipeToDetialEquipe(@PathVariable("nomEquipe") String nomEquipe,
+                                    @PathVariable("thema") String thema){
         iDetailEquipeService.assignEquipeToDetialEquipe(nomEquipe,thema);
     }
     
