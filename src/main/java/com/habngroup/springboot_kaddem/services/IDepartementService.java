@@ -25,4 +25,6 @@ public interface IDepartementService {
     public long countprofesseurbydepartement(String nomDepart);
     List<Departement> getdepartementSorted();
 
+    Departement getdepartementbynom(String nomDepartement);
+
 }

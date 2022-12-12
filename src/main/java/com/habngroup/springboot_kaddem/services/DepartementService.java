@@ -125,4 +125,9 @@ public class DepartementService implements IDepartementService {
 
     }
 
+    @Override
+    public Departement getdepartementbynom(String nomDepartement) {
+        return  departementRepository.findDepartementByNomDepart(nomDepartement).orElseThrow(() -> new IllegalStateException("Departement does not exist"));
+    }
+
 }
