@@ -76,10 +76,11 @@ public class DepartementController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/ajouterchefdepartemnt/{nomDepartement}/{idprof}")
-    void affecterChefDepartementparnom(@PathVariable("nomDepartement") String nomDepartement, @PathVariable("idprof") Long idProf) {
+    @PutMapping("/ajouterchefdepartemnt/{idDepartement}/{idprof}")
+    void affecterChefDepartementparnom(@PathVariable("idDepartement") Long idDepartement, @PathVariable("idprof") Long idProf) {
         Professor professor = iProfessorservice.getProfessorById(idProf);
-        iDepartementService.affectChefDepartement(nomDepartement, professor);
+        Departement d=iDepartementService.getDepartementById(idDepartement);
+        iDepartementService.affectChefDepartement(d.getNomDepart(), professor);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
