@@ -26,6 +26,7 @@ public class Equipe implements Serializable {
     @JsonIgnore
     private Set<Etudiant> etudiants;
     @OneToOne(mappedBy = "equipe")
+    @JsonIgnore
     private DetailEquipe detailEquipe;
 
 }
