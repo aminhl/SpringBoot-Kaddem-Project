@@ -77,10 +77,10 @@ public class DetailEquipeService implements IDetailEquipeService{
     }
 
     @Override
-    public void assignEquipeToDetialEquipe(Long idEquipe, Long idDetailEquipe) {
-        DetailEquipe detailEquipe = detailEquipeRepository.findById(idDetailEquipe).orElse(null);
-        Equipe equipe = equipeRepository.findById(idEquipe).orElse(null);
-        detailEquipe.setEquipe(equipe);
-        detailEquipeRepository.save(detailEquipe);
+    public void assignEquipeToDetialEquipe(String nomEquipe, String thematique) {
+        Equipe equipe = equipeRepository.findEquipeByNomEquipe(nomEquipe).stream().findFirst().orElse(null);
+        detailEquipeRepository.findDetailEquipeByThematique(thematique);
     }
+
+
 }

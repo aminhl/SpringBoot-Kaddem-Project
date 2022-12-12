@@ -55,10 +55,10 @@ public class DetailEquipeController {
     }
 
 
-    @PutMapping("/assignEquipeToDetialEquipe")
+    @PutMapping("/assignEquipeToDetialEquipe/{nomEquipe}/{thema}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    void assignEquipeToDetialEquipe(@RequestParam("idEquipe") Long idEquipe,@RequestParam("idDetailEquipe") Long idDetailEquipe){
-        iDetailEquipeService.assignEquipeToDetialEquipe(idEquipe,idDetailEquipe);
+    void assignEquipeToDetialEquipe(@PathVariable("nomEquipe") String nomEquipe,@PathVariable("thema") String thema){
+        iDetailEquipeService.assignEquipeToDetialEquipe(nomEquipe,thema);
     }
     
 }
