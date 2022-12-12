@@ -104,14 +104,19 @@ public class DepartementController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-        @GetMapping("exportdepartpdf")
+    @GetMapping("exportdepartpdf")
     @ResponseBody
     public ResponseEntity<InputStreamResource> exportTermsPdf() {
         List<Departement> departements = iDepartementService.getAllDepartements();
-        ByteArrayInputStream bais = ExportpdfService.departementsPDFReport("List des departement:","Les departements",departements,"getNomDepart");
+        ByteArrayInputStream bais = ExportpdfService.departementsPDFReport("List des departement:", "Les departements", departements, "getNomDepart");
         HttpHeaders headers = new HttpHeaders();
-        headers.add("content-Disposition","inline;filename=departements.pdf");
+        headers.add("content-Disposition", "inline;filename=departements.pdf");
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @GetMapping("/findDepartementByname/{nomDepartement}")
+    Departement getdepartementbynom(@PathVariable("nomDepartement") String nomdepart) {
+        return iDepartementService.getdepartementbynom(nomdepart);
+    }
 }
