@@ -5,6 +5,7 @@ import com.habngroup.springboot_kaddem.entities.Etudiant;
 import com.habngroup.springboot_kaddem.entities.Option;
 import com.habngroup.springboot_kaddem.entities.Professor;
 import com.habngroup.springboot_kaddem.services.IDepartementService;
+import com.habngroup.springboot_kaddem.services.IProfessor;
 import com.habngroup.springboot_kaddem.utils.ExportpdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -24,10 +25,12 @@ import java.util.Set;
 public class DepartementController {
 
     private final IDepartementService iDepartementService;
+    private final IProfessor iProfessorservice;
 
     @Autowired
-    public DepartementController(IDepartementService iDepartementService) {
+    public DepartementController(IDepartementService iDepartementService, IProfessor iProfessorservice) {
         this.iDepartementService = iDepartementService;
+        this.iProfessorservice = iProfessorservice;
     }
 
     @GetMapping("/getDepartements")
@@ -69,6 +72,13 @@ public class DepartementController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/ajouterchefdepartemnt/{nomDepartement}")
     void affecterChefDepartement(@PathVariable("nomDepartement") String nomDepartement, @RequestBody Professor professor) {
+        iDepartementService.affectChefDepartement(nomDepartement, professor);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/ajouterchefdepartemnt/{nomDepartement}/{idprof}")
+    void affecterChefDepartementparnom(@PathVariable("nomDepartement") String nomDepartement, @PathVariable("idprof") Long idProf) {
+        Professor professor = iProfessorservice.getProfessorById(idProf);
         iDepartementService.affectChefDepartement(nomDepartement, professor);
     }
 
@@ -115,7 +125,7 @@ public class DepartementController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    @GetMapping("/findDepartementByname/{nomDepartement}")
+    @GetMapping("/findDepartByname/{nomDepartement}")
     Departement getdepartementbynom(@PathVariable("nomDepartement") String nomdepart) {
         return iDepartementService.getdepartementbynom(nomdepart);
     }
