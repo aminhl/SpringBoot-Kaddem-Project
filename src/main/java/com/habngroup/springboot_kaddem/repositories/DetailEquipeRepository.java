@@ -10,4 +10,6 @@ public interface DetailEquipeRepository extends JpaRepository<DetailEquipe, Long
 
     @Query("select de from DetailEquipe de where de.salle = ?1 and de.thematique = ?2")
     Optional<DetailEquipe> findDetailEquipeBySalleAndThematique(Long salle, String thematique);
+
+    DetailEquipe findDetailEquipeByThematique(String Thema);
 }
