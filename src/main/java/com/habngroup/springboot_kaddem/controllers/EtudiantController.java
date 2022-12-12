@@ -156,6 +156,7 @@ public class EtudiantController {
     }
 
         @PostMapping("/AffectEtudiantToEvent/{idEvent}/{idEtudiant}")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
     void AffectEtudiantToEvent(@PathVariable("idEvent") Long idEvent,@PathVariable("idEtudiant") Long idEtudiant)
     {
         iEtudiantService.AffectEtudiantToEvent(idEvent,idEtudiant);

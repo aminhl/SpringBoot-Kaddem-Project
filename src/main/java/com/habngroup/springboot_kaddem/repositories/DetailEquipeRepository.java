@@ -1,6 +1,7 @@
 package com.habngroup.springboot_kaddem.repositories;
 
 import com.habngroup.springboot_kaddem.entities.DetailEquipe;
+import com.habngroup.springboot_kaddem.entities.Equipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,4 +13,6 @@ public interface DetailEquipeRepository extends JpaRepository<DetailEquipe, Long
     Optional<DetailEquipe> findDetailEquipeBySalleAndThematique(Long salle, String thematique);
 
     DetailEquipe findDetailEquipeByThematique(String Thema);
+
+    DetailEquipe findDetailEquipeByEquipeIdEquipe(Long idEquipe);
 }
