@@ -12,4 +12,6 @@ public interface IDetailEquipeService {
     List<DetailEquipe> getAllDetailEquipes();
     DetailEquipe getDetailEquipeById(Long detailEquipeId);
     void assignEquipeToDetialEquipe(String nomEquipe,String salleDetailEquipe);
+
+    DetailEquipe findDetailEquipeByEquipe(Long idEquipe);
 }

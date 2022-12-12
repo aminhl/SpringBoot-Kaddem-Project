@@ -61,5 +61,11 @@ public class DetailEquipeController {
                                     @PathVariable("thema") String thema){
         iDetailEquipeService.assignEquipeToDetialEquipe(nomEquipe,thema);
     }
+    @GetMapping("/findDetailEquipeByEquipe/{idEquipe}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    DetailEquipe detailEquipe(@PathVariable("idEquipe") Long idEquipe)
+    {
+        return iDetailEquipeService.findDetailEquipeByEquipe(idEquipe);
+    }
     
 }

@@ -84,5 +84,11 @@ public class DetailEquipeService implements IDetailEquipeService{
         detailEquipeRepository.save(detailEquipeByThematique);
     }
 
+    @Override
+    public DetailEquipe findDetailEquipeByEquipe(Long idEquipe) {
+
+        return  detailEquipeRepository.findDetailEquipeByEquipeIdEquipe(idEquipe);
+    }
+
 
 }
